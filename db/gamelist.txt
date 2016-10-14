@@ -1,0 +1,171 @@
+Name,Min players,Max players,Owner,Base time,Additional time per player,Tag1,Tag2,Tag3,Tag4,Theme1,Theme2
+1960: The Making of the President,2,2,Consty,,,Strategy,Wargame,,,Political,Historical
+1989: Dawn of Freedom,2,2,Consty,,,Strategy,Wargame,,,Political,Historical
+7 Wonders,3,7,"Consty, Brian",30,,Strategy,Thematic,,,Civ-Building,
+7 Wonders with expansions,3,8,Consty,40,,Strategy,Thematic,Expansion,,Civ-Building,
+7 Wonders: Duel,2,2,Consty,,,Strategy,Thematic,,,Civ-Building,
+A Game of Thrones,,6,Ryan,,,Thematic,,,,Fantasy,
+Age of Empires III,,6,Tony,0,30,Euro,Thematic,,,Historical,
+Agricola,2,5,"Brian, Tony",60,30,Euro,,,,Farming,Historical
+Agricola with Farmers of the Moor,2,5,Consty,60,30,Euro,Expansion,,,Farming,Historical
+Amun Re,3,5,Bill,90,,Euro,,,,,
+Andean Abyss,2,4,Consty,,,Wargame,Thematic,,,Historical,COIN
+Antike,,6,Ryan,,,Euro,,,,Historical,
+Antike II,3,6,"Bill, Ryan",90,15,Euro,,,,Historical,
+Aquasphere,2,4,Bill,100,,Euro,,,,,
+Asara,,,Tony,,,Euro,,,,,
+Asgard,2,4,Tony,,,Euro,,,,Norse,Mythology
+Automobile,3,5,Bill,120,,Euro,,,,Economic,Cars
+Battlestar Galactica,4,6,Consty,,,Thematic,Traitor,,,Scifi,
+Belfort,,,Ryan,,,Euro,,,,Fantasy,
+BIOS:Megafauna,2,4,Consty,60,30,Thematic,Simulation,,,Evolution,
+Blood Bowl,2,2,Consty,,,Thematic,,,,Fantasy,American Football
+Blood Bowl Team Manager,2,4,Consty,,,Thematic,,,,Fantasy,American Football
+Bora Bora,2,5,Consty,,,Euro,,,,,
+Brass,2,4,Tony,,,Euro,,,,Economic,
+Bremerhaven,2,4,Consty,,,Euro,,,,Economic,Harbours
+Brew Crafters,2,5,"Consty,Bill",60,30,Euro,,,,Beer-making,
+Bruxelles 1893,2,5,Tony,,,Euro,,,,Art,
+Carcassonne,2,5,Ryan,,,Family Game,,,,Civ-building,
+Carcassonne : The Tower,2,6,,,,Family Game,Expansion,,,Civ-building,
+Carcassonne : Traders and Builders,2,6,,,,Family Game,Expansion,,,Civ-building,
+Carcassonne: Hunters and Gatherers,2,5,Consty,,,Family Game,,,,Civ-building,
+Carson City,2,5,Brian,,,Euro,,,,Wild West,
+Castles of Mad King Ludwig,2,4,Consty,,,Strategy,Thematic,,,Castle-building,Historical
+Castles of Burgundy,2,4,"Consty, Roland",,,Euro,,,,,
+Caverna,2,7,"Consty, Bill",60,30,Euro,,,,Fantasy,Farming
+Caylus,2,4,"Tony, Ryan",30,30,Euro,,,,,
+Chaos Marauders,2,4,Consty,,,Family Game,Thematic,,,Fantasy,
+Chicago Express,,6,Ryan,45,,Euro,,,,Economic,Trains
+Citadels,,,"Ryan, Brian",,,Party Game,Thematic,,,,
+Clash of Cultures (with expansion),2,4,Consty,,,Strategy,Thematic,Expansion,,Civ-building,
+Claustrophobia,,,,,,Euro,,,,,
+CO2,1,5,Bill,120,,Euro,Thematic,,,Environmental,
+Compounded,3,5,Consty,,,Euro,Thematic,,,Chemistry,
+Concordia,2,5,"Consty, Bill",,,Euro,Thematic,,,Roman,
+Concordia: Britannia and Germania expansion,2,5,Bill,90,,Euro,Thematic,Expansion,,Roman,
+Conflict of Heroes,,,Tony,,,Wargame,Thematic,,,World War II,Historical
+Core Worlds,2,5,Consty,,,Thematic,Deckbuilder,,,Scifi,
+Coup,2,10,"Consty, Ryan, Brian",,,Party Game,Traitor,,,Scifi,
+Cuba +El presidente expansion,2,5,Bill,75,15,Euro,,,,Historical,Economic
+Cuba Libre,2,4,Consty,,,Wargame,Thematic,,,Historical,COIN
+Dark Moon,3,7,Consty,60,15,Thematic,Traitor,,,Scifi,
+De Vulgari Eloquenta,,,,,,Euro,,,,,
+Descent: Journeys in the Dark,,,Tony,,,Thematic,Miniatures,,,Fantasy,
+Dominant Species,2,5,"Consty, Tony",,,Thematic,Euro,,,Evolution,
+Dominion,2,4,"Ryan, Brian",0,10,Deckbuilder,,,,Historical,Fantasy
+Eclipse with Rise of the Ancients,4,9,"Consty, Brian",0,45,Thematic,Euro,,,Scifi,Civ-building
+Egizia,,,,,,Euro,,,,,
+El Grande,,5,"Ryan, Bill",120,,Euro,,,,Historical,
+Elysium,2,4,Consty,60,30,Strategy,Thematic,,,Ancient Greek,Mythology
+Endeavor,3,5,Tony,90,,Euro,,,,Historical,
+Evolution,2,6,Consty,,,Strategy,Thematic,,,Evolution,
+Fire In The Lake,2,4,Consty,,,Wargame,Thematic,,,Historical,COIN
+First Train to Nuremburg,,,,,,Euro,Train,,,Historical,
+Five Tribes,2,4,"Consty, Bill",60,30,Strategy,Thematic,,,Fantasy,Historical
+Fluxx (Monty Python or Cthulhu),2,4,Consty,,,Party Game,,,,,
+Forbidden Desert,2,5,Consty,,,Co-op,Thematic,,,Fantasy,
+Formula De,2,6,Consty,,,Thematic,,,,Racing,
+Genoa,,,,,,Euro,,,,Historical,Economic
+Glass Road,2,4,"Consty, Bill",,20,Euro,,,,Historical,
+Goa,2,4,Brian,,,Euro,,,,Historical,Economic
+Hansa Teutonica,2,5,Tony,120,,Euro,,,,Historical,
+Hermagor,2,5,Tony,,,Euro,,,,Historical,
+High Frontier,2,4,Consty,,,Thematic,Simulation,,,Scifi,Rocket Science
+Il Vecchio,,,,,,Euro,,,,,
+Imperial,,,Ryan,,,Euro,,,,Historical,Economic
+Imperial 2030,2,6,Bill,120,10,Euro,,,,Scifi,Economic
+Istanbul,2,5,"Bill, Consty",40,5,Strategy,Thematic,,,Historical,
+Kanban: Automotive Revolution,2,4,Tony,,,Euro,Thematic,,,Economic,Cars
+Kemet,2,5,Ryan,60,15,,,,,,
+Keyflower,,6,Ryan,,,Euro,,,,Historical,
+Kingdom Builder with Nomads,,5,,10,15,Euro,,,,Fantasy,
+La Granja,1,4,Tony,,,Euro,,,,,
+Labyrinth,1,2,Consty,,,Wargame,,,,Historical,COIN
+Lagoon: Land of Druids,,,,,,Euro,,,,,
+Last Will,,,,,,Euro,,,,,
+Le Havre (with expansion),2,4,Consty,,,Euro,,,,Historical,Harbours
+Lewis and Clark,1,5,Bill,,30,Strategy,Thematic,,,Historical,Exploration
+Lords of Waterdeep (with expansion),2,6,Consty,,,Strategy,Thematic,,,Fantasy,
+Lost Cities,2,4,Bill,30,10,Euro,,,,,
+Luna,,,,,,Euro,,,,,
+Madeira,2,4,Bill,120,15,Euro,,,,,
+Manhattan Project,2,5,Consty,,,Strategy,Thematic,,,Historical,
+Maria,,,,,,Wargame,,,,Historical,
+Medici,,6,Tony,,,Euro,,,,Economic,
+Memoir 44,,,,,,Wargame,,,,World War II,Historical
+Mr. Jack,,,,,,Strategy,Thematic,,,Historical,
+Murano,2,4,Bill,60,,Euro,,,,,
+Nations,,5,Tony,,,Strategy,Thematic,,,Historical,Civ-building
+Navegador,2,5,Tony,,,Euro,,,,Historical,
+Notre Dame,,,,,,Euro,,,,Historical,
+Ora et Labora,2,4,"Consty, Bill",,,Euro,,,,Historical,
+Orleans,2,4,Bill,60,10,Euro,,,,Historical,
+Panamax,2,4,Ryan,120,,Strategy,Thematic,,,Economic,Panama Canal
+Pandemic,2,4,Consty,,,Co-op,,,,Modern,Outbreak
+Pantheon,2,4,Bill,60,,Euro,,,,Mythology,
+Paris Connection,,,Ryan,30,,Euro,,,,Trains,
+Power Grid,2,6,Ryan,120,,Euro,,,,Economic,Power Infrastructure
+Power Struggle,,,,,,Euro,,,,Corporate,
+Praetor,2,5,Bill,60,10,Euro,,,,Roman,
+Princes of Machu Picchu,2,5,,,,Euro,,,,Mesoamerican,
+Puerto Rico,3,5,"Tim, Bill, Ryan",60,,Euro,,,,Economic,Caribbean
+Quebec,,,,,,Euro,,,,Historical,
+Ra,2,5,Bill,60,,Euro,,,,Egypt,
+Race for the Galaxy,2,6,"Consty, Ryan",,,Deckbuilder,,,,Scifi,
+Railways of the World,2,6,Ryan,30,30,Euro,Train,,,Economic,Trains
+Reef encounters,2,4,Bill,60,15,Euro,,,,,
+Resistance: Avalon,2,10,Consty,,,Party Game,Traitor,,,Fantasy,Arthurian
+Robo Rally,2,8,"Bill, Ryan",30,,Strategy,Thematic,,,Scifi,Robots
+Russian Railroads,2,4,Ryan,120,,Euro,Thematic,,,Historical,Trains
+Samurai,2,4,Bill,30,,Euro,,,,Japan,
+Santiago,,,,,,Euro,,,,,
+Settlers of Catan,2,4,,,,Euro,,,,Fantasy,
+Settlers of the Stone Age,3,4,Consty,,,Euro,Thematic,,,Historical,
+Shogun,3,5,"Tony, Roland",,,Strategy,Thematic,,,Japan,
+Small World,2,5,Tony,,,Strategy,Family Game,,,Fantasy,
+Snowdonia,2,5,Consty,,,Euro,Thematic,,,Historical,Trains
+Splendor,2,4,"Consty, Ryan",30,,Strategy,Family Game,,,Gems,
+Spyrium,2,5,Tony,,,Euro,,,,,
+Star Realms,2,2,Consty,30,15,Deckbuilder,,,,Scifi,
+Steam,3,6,Tony,90,,Euro,Train,,,Economic,Trains
+Steam: Barons,,,Tony,,,Euro,Train,Expansion,,Economic,Trains
+Stone Age,,,Tony,,,Euro,,,,Historical,
+Stronghold,,,,,,Euro,,,,,
+Struggle of Empires,,,,,,Strategy,Thematic,,,Historical,
+Suburbia,,4,Brian,,,Strategy,Thematic,,,Civ-building,Cities
+Survive: Escape from Atlantis,2,6,Consty,,,Family Game,,,,Atlantis,
+Sylla,,,,,,Euro,,,,,
+Takenoko,2,4,Consty,,,Family Game,,,,Japan,Pandas
+Terra Mystica,2,5,"Bill, Ryan",60,30,Euro,,,,Fantasy,Civ-building
+Terra Mystica with expansion,2,5,"Brian, Bill, Ryan",60,30,Euro,Expansioin,,,Fantasy,Civ-building
+Through the Ages,2,4,Ryan,120,30,,,,,,
+Through the Desert,,,,,,Euro,,,,,
+Thunder Alley,2,7,Consty,,,Strategy,Thematic,,,Racing,
+Ticket to Ride: Europe,,,,,,Family Game,,,,Trains,
+Tigris and Euphrates,2,4,Bill,60,,Euro,,,,Historical,
+Tikal,,,,,,Euro,,,,Mesoamerican,
+Trajan,2,4,Consty,,,Euro,,,,Roman,
+Troyes,2,4,Bill,90,,Euro,,,,Historical,
+Twilight Struggle,2,2,Consty,,,Strategy,Thematic,,,Political,Historical
+Tzolk'in,2,4,"Ryan, Brian",20,20,Euro,,,,Mesoamerican,
+Tzolk'in with Tribes & Prophecies,2,5,Brian,20,25,Euro,Expansion,,,Mesoamerican,
+Unspeakable Words,2,4,Consty,,,Party Game,,,,Cthulhu,
+Vanuatu,,,,,,Euro,,,,,
+Vasco Da Gama,2,4,"Roland, Bill",,,Euro,,,,Historical,
+Vikings,2,4,Bill,30,,Euro,,,,Historical,
+Village,2,4,Bill,60,15,Euro,,,,Fantasy,
+Vinhos,2,4,"Consty, Tony",,,Strategy,Thematic,,,Wine-making,
+Viticulture,2,6,Ryan,,,Strategy,Thematic,,,Wine-making,
+Viticulture with all playable expansions,2,6,Ryan,,,Strategy,Thematic,Expansion,,Wine-making,
+Wasabi,,,,,,Family Game,,,,Japan,
+Wir Sind Das Volk,2,2,Consty,,,Strategy,Thematic,,,Political,Historical
+World Without End,2,4,Bill,60,15,Strategy,,,,Fantasy,
+X-Wing,2,4,Consty,,,Wargame,Miniatures,,,Scifi,
+Yinsh,2,2,,,,Abstract,,,,Abstract,
+Yspahan,,,,,,Euro,,,,,
+Zertz,2,2,,,,Abstract,,,,Abstract,
+Zhanguo,2,4,Tony,,,Euro,,,,Historical,
+Ships 2016,2,4,Bill,120,,EurO,Wallace,,,Ships,
+Marco Polo,2,4,Bill,,,Euro,Midweight,,,,
+Glen More,2,4,Bill,,,Tile laying,,,,,

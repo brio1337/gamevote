@@ -1,0 +1,49 @@
+Eclipse with Rise of the Ancients,1000,"Consty, Brian"
+Hermagor,1000,Tony
+Nations,1000,Tony
+Imperial 2030,900,
+Dominion,900,"Ryan, Brian"
+Terra Mystica with expansion,1000,"Brian, Bill, Ryan"
+Hansa Teutonica,800,Tony
+Le Havre (with expansion),850,Consty
+Navegador,850,Tony
+Shogun,600,"Tony, Roland"
+Antike II,600,
+Agricola,800,"Brian, Tony"
+Agricola with Farmers of the Moor,800,Consty
+Clash of Cultures (with expansion),800,Consty
+Vinhos,800,
+Endeavor,800,
+Kemet,400,
+Power Grid,600,Ryan
+Coup,700,
+Caverna,800,"Consty, Bill"
+Concordia,700,"Consty, Bill"
+Trajan,700,Consty
+Viticulture,650,Ryan
+Caylus,700,"Tony, Ryan"
+Kanban: Automotive Revolution,650,
+Steam,800,Tony
+Railways of the World,800,Ryan
+Russian Railroads,700,Ryan
+El Grande,600,"Ryan, Bill"
+Splendor,600,"Consty, Ryan"
+Age of Empires III,600,Tony
+Citadels,400,
+High Frontier,750,
+Brew Crafters,500,
+Tzolk'in with Tribes & Prophecies,500,Brian
+Panamax,500,Ryan
+Settlers of the Stone Age,500,Consty
+Snowdonia,500,Consty
+Automobile,500,
+Puerto Rico,400,"Tim, Bill, Ryan"
+Suburbia,100,Brian
+Dominant Species,300,"Consty, Tony"
+Tzolk'in,300,"Ryan, Brian"
+Keyflower,600,Ryan
+Kingdom Builder with Nomads,200,
+Ora et Labora,150,"Consty, Bill"
+Medici,150,Tony
+Antike,120,Ryan
+Chicago Express,100,Ryan

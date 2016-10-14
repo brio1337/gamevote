@@ -1,0 +1,123 @@
+Agricola,1100,"Brian, Tony"
+Power Grid,1100,Ryan
+Shogun,1100,"Tony, Roland"
+Puerto Rico,1100,"Tim, Bill, Ryan"
+Railways of the World,1200,Ryan
+El Grande,1100,"Ryan, Bill"
+Tzolk'in,1100,"Ryan, Brian"
+Splendor,1100,"Consty, Ryan"
+Snowdonia,1100,Consty
+Tzolk'in with Tribes & Prophecies,500,Brian
+Steam,1100,Tony
+Chicago Express,1100,Ryan
+Panamax,1100,Ryan
+Medici,1100,Tony
+Russian Railroads,1100,Ryan
+Caylus,1100,"Tony, Ryan"
+Antike II,1040,"Bill, Ryan"
+Imperial 2030,1030,Bill
+Concordia,1000,"Consty, Bill"
+Agricola with Farmers of the Moor,872,Consty
+Kingdom Builder with Nomads,850,
+Le Havre (with expansion),840,Consty
+Citadels,838,"Ryan, Brian"
+Nations,832,Tony
+Hansa Teutonica,800,Tony
+Keyflower,800,Ryan
+Compounded,795,Consty
+Manhattan Project,795,Consty
+Asara,795,Tony
+Brass,795,Tony
+Bruxelles 1893,795,Tony
+Claustrophobia,795,Tony
+Conflict of Heroes,795,Tony
+Descent: Journeys in the Dark,795,Tony
+De Vulgari Eloquenta,795,
+Egizia,795,Tony
+Endeavor,795,Tony
+First Train to Nuremburg,1200,Tony
+Genoa,795,Tony
+Hermagor,795,Tony
+Il Vecchio,795,Tony
+Kanban: Automotive Revolution,795,Tony
+Lagoon: Land of Druids,795,Tony
+Last Will,795,Tony
+Luna,795,Tony
+Maria,795,Tony
+Memoir 44,795,Tony
+Mr. Jack,795,Tony
+Navegador,795,Tony
+Notre Dame,795,Tony
+Power Struggle,795,Tony
+Princes of Machu Picchu,795,
+Quebec,795,Tony
+Steam: Barons,795,Tony
+Stone Age,795,Tony
+Stronghold,795,Tony
+Struggle of Empires,795,
+Sylla,795,Tony
+Through the Desert,795,Tony
+Tigris and Euphrates,795,Bill
+Tikal,795,Tony
+Vasco Da Gama,795,"Roland, Bill"
+Vanuatu,795,Tony
+Vinhos,795,"Consty, Tony"
+Wasabi,795,
+Yinsh,795,
+Yspahan,795,Bill
+Zertz,795,Bill
+Elysium,795,Consty
+Five Tribes,795,"Consty, Bill"
+Carson City,790,Brian
+Antike,784,Ryan
+Castles of Burgundy,773,Brian
+Suburbia,763,Brian
+7 Wonders with expansions,760,Consty
+7 Wonders,758,"Consty, Brian"
+Viticulture with all playable expansions,756,Ryan
+A Game of Thrones,742,Ryan
+Eclipse with Rise of the Ancients,735,"Consty, Brian"
+Bremerhaven,680,Consty
+Goa,640,Brian
+Santiago,630,Tony
+Bora Bora,600,Consty
+Dominion,550,"Ryan, Brian"
+BIOS:Megafauna,550,Consty
+Kemet,500,Ryan
+Glass Road,500,"Consty, Bill"
+Aquasphere,500,Bill
+Automobile,500,Bill
+Through the Ages,500,Ryan
+Terra Mystica with expansion,500,"Brian, Bill, Ryan"
+Trajan,500,Consty
+Terra Mystica,500,"Bill, Ryan"
+Asgard,500,Tony
+Age of Empires III,500,Tony
+Dominant Species,500,"Consty, Tony"
+Brew Crafters,500,"Consty,Bill"
+Ora et Labora,500,"Consty, Bill"
+Caverna,500,"Consty, Bill"
+Viticulture,500,Ryan
+Takenoko,500,Consty
+Clash of Cultures (with expansion),400,Consty
+Battlestar Galactica,0,Consty
+Belfort,0,Ryan
+Blood Bowl Team Manager,0,Consty
+Carcassonne,0,Ryan
+Carcassonne: Hunters and Gatherers,0,Consty
+Core Worlds,0,Consty
+Cuba Libre,0,Consty
+Formula De,0,Consty
+Imperial,0,Ryan
+Lords of Waterdeep (with expansion),0,Consty
+Pandemic,0,Consty
+Paris Connection,0,Ryan
+Settlers of the Stone Age,0,Consty
+Survive: Escape from Atlantis,0,Consty
+Thunder Alley,0,Consty
+Twilight Struggle,0,Consty
+Carcassonne : The Tower,0,
+Carcassonne : Traders and Builders,0,
+Small World,0,Tony
+Spyrium,0,Tony
+Ticket to Ride: Europe,0,Tony

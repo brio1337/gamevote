@@ -1,0 +1,13 @@
+Terra Mystica,20
+Trajan,30
+Vasco Da Gama,40
+Panamax,45
+Bora Bora,50
+Caverna,60
+Railways of the World,80
+Russian Railroads,90
+Puerto Rico,100
+Tzolk'in,110
+Bremerhaven,120
+Dominant Species,130
+Power Grid,150

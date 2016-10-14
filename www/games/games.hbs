@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+	<title>Vototron</title>
+	<link rel="stylesheet" type="text/css" href="common.css" />
+	<link rel="stylesheet" type="text/css" href="games.css" />
+</head>
+<body>
+	<header>
+		<h1>Hello {{username}}</h1>
+		<form action="/games" id="gamevotes" name="gamevotes" method="post">
+			<input type="submit" value="Save Votes">
+		</form>
+		<nav>
+			<a href="/password">Set Password</a>
+			<form action="/logout" method="post">
+				<input type="submit" value="Logout">
+			</form>
+		</nav>
+	</header>
+	<div id="inner">
+		<div id="left">
+			<h2>Ranked games</h2>
+			<fieldset id="theList" form="gamevotes">
+				{{#each gamelist}}
+					<div class="game-entry" data-id="{{game}}" data-vote="{{vote}}">
+						<span>{{game}}</span>
+						<input type="number" name="{{game}}" value="{{vote}}" autocomplete="off" onblur="onInputBlur(event)">
+					</div>
+				{{/each}}
+			</fieldset>
+		</div>
+		<div id="right">
+			<h2>Unranked games</h2>
+			<div id="unrankedList">
+				{{#each unranked}}
+					<div class="game-entry" data-id="{{game}}">
+						<span>{{game}}</span>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+	<script src="Sortable.js"></script>
+	<script src="games.js"></script>
+</body>
+</html>

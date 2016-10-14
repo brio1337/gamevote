@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Vototron</title>
+	<link rel="stylesheet" type="text/css" href="common.css" />
+</head>
+<body>
+{{#if errorMsg}}
+<p class="error-bar">{{errorMsg}}</p>
+{{/if}}
+<form method="post">
+<fieldset class="admin-box">
+	<legend>Login to Vototron</legend>
+  <div class="admin-row">
+    <label for="username">Name:</label>
+    <input type="text" name="username" id="username" autofocus>
+  </div>
+  <div class="admin-row">
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password">
+  </div>
+  <div class="center-block">
+    <input type="submit" value="Login">
+  </div>
+</fieldset>
+</body>
+</html>

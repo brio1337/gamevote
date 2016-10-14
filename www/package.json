@@ -1,0 +1,25 @@
+{
+  "name": "vototron",
+  "version": "1.0.0",
+  "description": "Game voting site",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "body-parser": "^1.15.2",
+    "express": "^4.13.4",
+    "express-session": "^1.14.1",
+    "hbs": "^4.0.0",
+    "node": "^0.0.0",
+    "pg": "^4.5.2"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "brio",
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "nodemon": "^1.10.2"
+  }
+}

@@ -1,0 +1,96 @@
+Battlestar Galactica,1000,Consty
+1989: Dawn of Freedom,990,Consty
+Istanbul,980,"Bill, Consty"
+Dark Moon,980,Consty
+Five Tribes,970,"Consty, Bill"
+Castles of Burgundy,970,
+Elysium,960,Consty
+Race for the Galaxy,950,Consty
+Thunder Alley,940,Consty
+Glass Road,930,"Consty, Bill"
+Caverna,920,"Consty, Bill"
+Concordia,910,"Consty, Bill"
+Trajan,900,Consty
+Vinhos,895,"Consty, Tony"
+Twilight Struggle,890,Consty
+Clash of Cultures (with expansion),880,Consty
+Blood Bowl Team Manager,870,Consty
+Evolution,865,Consty
+Panamax,860,
+Cuba Libre,850,Consty
+Andean Abyss,840,Consty
+Star Realms,830,Consty
+Brew Crafters,820,"Consty,Bill"
+Splendor,810,Consty
+Survive: Escape from Atlantis,800,Consty
+Manhattan Project,790,Consty
+Ora et Labora,780,"Consty, Bill"
+Core Worlds,770,Consty
+Takenoko,760,Consty
+Le Havre (with expansion),750,Consty
+Dominant Species,740,"Consty, Tony"
+Nations,735,Tony
+Lords of Waterdeep (with expansion),730,Consty
+Formula De,720,Consty
+X-Wing,710,
+Snowdonia,700,Consty
+Settlers of the Stone Age,690,Consty
+7 Wonders with expansions,680,Consty
+Agricola with Farmers of the Moor,670,Consty
+Eclipse with Rise of the Ancients,660,"Consty, Brian"
+Dominion,650,Ryan
+Labyrinth,640,Consty
+1960: The Making of the President,630,Consty
+Fire In The Lake,620,Consty
+Puerto Rico,610,"Tim, Bill"
+Settlers of Catan,600,
+Pandemic,590,Consty
+Unspeakable Words,580,Consty
+Carcassonne: Hunters and Gatherers,570,Consty
+Carcassonne,560,
+Forbidden Desert,550,Consty
+Blood Bowl,540,Consty
+Chaos Marauders,530,Consty
+Resistance: Avalon,520,Consty
+Compounded,510,Consty
+Bora Bora,500,Consty
+Kingdom Builder with Nomads,490,
+Citadels,480,"Ryan, Brian"
+Viticulture with all playable expansions,470,
+Russian Railroads,460,
+Small World,450,Tony
+BIOS:Megafauna,400,Consty
+Coup,0,Consty
+Fluxx (Monty Python or Cthulhu),0,Consty
+Terra Mystica with expansion,0,"Brian, Bill"
+Tzolk'in,0,
+Chicago Express,0,
+High Frontier,350,Consty
+Keyflower,0,
+Terra Mystica,0,Bill
+Ticket to Ride: Europe,0,
+Tzolk'in,0,
+Agricola,300,Brian
+Antike,0,Ryan
+Asgard,0,Tony
+Bruxelles 1893,0,Tony
+Caylus,0,Tony
+El Grande,0,"Ryan, Bill"
+Hansa Teutonica,0,Tony
+Imperial,0,Ryan
+Medici,0,Tony
+Railways of the World,0,
+Steam,0,Tony
+Steam: Barons,0,Tony
+Yinsh,0,
+Zertz,0,
+Power Grid,0,
+Power Struggle,0,
+Paris Connection,0,
+Carson City,0,Brian
+Belfort,0,
+Memior 44,0,
+Tzolk'in with Tribes & Prophecies,0,Brian
+Bremerhaven,0,Consty
+Goa,0,Brian
+Tigris and Euphrates,0,Bill

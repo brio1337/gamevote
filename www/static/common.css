@@ -1,0 +1,26 @@
+body {
+  font-family: Helvetica;
+}
+
+.error-bar {
+  background-color: red;
+  padding: 1em;
+}
+
+.center-block {
+  display: block;
+  text-align: center;
+}
+
+.admin-box {
+  display: inline-block;
+  border-spacing: 1em;
+}
+
+.admin-row {
+  display: table-row;
+}
+
+.admin-row > label, .admin-row > input {
+  display: table-cell;
+}
