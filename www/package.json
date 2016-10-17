@@ -1,5 +1,5 @@
 {
-  "name": "vototron",
+  "name": "gamevote",
   "version": "1.0.0",
   "description": "Game voting site",
   "main": "app.js",
