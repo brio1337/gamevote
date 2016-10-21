@@ -40,3 +40,9 @@ https.createServer({
 	key: fs.readFileSync('key.pem'),
 	cert: fs.readFileSync('cert.pem'),
 }, app).listen(443);
+
+var redirectToSecureApp = express();
+redirectToSecureApp.all('*', function(req, res) {
+	return res.redirect('https://' + req.hostname + req.originalUrl);
+});
+redirectToSecureApp.listen(80);
