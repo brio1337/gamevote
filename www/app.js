@@ -26,6 +26,7 @@ var routeData = {
 	logout: [],
 	password: [connstr, saltRounds],
 	games: [connstr],
+	autosave: [connstr],
 };
 
 for (mod in routeData) {

@@ -1,3 +1,5 @@
+var votesForm = document.querySelector('#gamevotes');
+
 function adjustRankToNeighbors(evt) {
 	// If the dropped item was from the unranked list, it doesn't have an input box, so create one.
 	var item = evt.item;
@@ -26,12 +28,15 @@ function adjustRankToNeighbors(evt) {
 	}
 	itemInput.value = newVal;
 	item.dataset.vote = newVal;
+
+	onFormChanged(votesForm);
 }
 
 function makeUnranked(evt) {
 	var item = evt.item;
 	item.removeChild(item.querySelector('input'));
 	unrankedSort.sort(unrankedSort.toArray().sort());
+	onFormChanged(votesForm);
 }
 
 function onInputBlur(evt) {
@@ -59,6 +64,8 @@ function onInputBlur(evt) {
 	if (moveTo) {
 		gameEntry.parentNode.insertBefore(gameEntry, moveTo.nextElementSibling);
 	}
+
+	onFormChanged(votesForm);
 }
 
 var rankedSort = Sortable.create(document.getElementById('theList'), {
@@ -76,27 +83,76 @@ var unrankedSort = Sortable.create(document.getElementById('unrankedList'), {
 	onAdd: makeUnranked,
 });
 
-function onSaved() {
-}
-
-function onSaveError() {
+function submitFormAsJSON(form, data, onLoadend) {
+	var req = new XMLHttpRequest();
+	req.open(form.method, form.action);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.addEventListener('loadend', onLoadend);
+	req.send(JSON.stringify(data));
+	return req;
 }
 
 function onSubmit(e) {
 	e.preventDefault();
 
+	// cancel the last one and resave
+	var form = e.target;
+	var curSave = currentSavingForms[form.action];
+	if (curSave) {
+		curSave.lastStart = 0;
+		if (curSave.xhr) {
+			curSave.xhr.abort();
+			delete curSave.xhr;
+		}
+		if (curSave.timer)
+			clearTimeout(curSave.timer);
+			delete curSave.timer;
+	}
+	onFormChanged(e.target);
+}
+
+function onAutoSaveChange(e) {
+	var autosaveCheckbox = e.target;
+	submitFormAsJSON(autosaveCheckbox.form, {autosave: autosaveCheckbox.checked});
+}
+
+votesForm.addEventListener('submit', onSubmit, false);
+document.querySelector('#autosave_check').addEventListener('change', onAutoSaveChange, false);
+
+
+// autosave!
+function autosaveNow(form, onLoadend) {
 	var data = {};
 	var gameEntries = document.querySelectorAll('#theList .game-entry');
 	for (var i = 0; i < gameEntries.length; i++) {
-		data[gameEntries[i].dataset.id] = gameEntries[i].dataset.vote;
+		var entryData = gameEntries[i].dataset;
+		data[entryData.id] = entryData.vote;
 	}
-
-	var req = new XMLHttpRequest();
-	req.addEventListener('load', onSaved);
-	req.addEventListener('error', onSaveError);
-	req.open('POST', '/games');
-	req.setRequestHeader('Content-Type', 'application/json');
-	req.send(JSON.stringify(data));
+	submitFormAsJSON(form, data, onLoadend);
 }
 
-document.querySelector('form').addEventListener('submit', onSubmit, false);
+// keyed by form.action
+var saveIntervalMilliseconds = 1000;
+var currentSavingForms = {};
+
+function onFormChanged(form) {
+	// called any time a vote changes.
+	// saves things in the background.
+	var curSave = currentSavingForms[form.action] || (currentSavingForms[form.action] = {});
+	curSave.dirty = true;
+	checkSaveForm();
+
+	function checkSaveForm() {
+		if (!curSave.dirty || curSave.xhr || curSave.timer) return;
+
+		curSave.dirty = false;
+		curSave.xhr = autosaveNow(form, function() {
+			delete curSave.xhr;
+			checkSaveForm();
+		});
+		curSave.timer = setTimeout(function() {
+			curSave.timer = null;
+			checkSaveForm();
+		}, saveIntervalMilliseconds);
+	}
+}

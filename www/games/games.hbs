@@ -9,9 +9,20 @@
 <body>
 	<header>
 		<h1>Hello {{username}}</h1>
-		<form action="/games" id="gamevotes" name="gamevotes" method="post">
-			<input type="submit" value="Save Votes">
-		</form>
+		<div>
+			<form id="autoform" name="autoform" action="/autosave" method="post">
+			</form>
+			<form id="gamevotes" name="gamevotes" action="/games" method="post">
+			</form>
+			<input class="javascript-required" form="autoform" id="autosave_check" type="checkbox">
+			{{#if autosave}}
+				<script>
+					document.querySelector('#autosave_check').checked = true;
+				</script>
+			{{/if}}
+			<label class="javascript-required" for="autosave_check">Autosave</label>
+			<input type="submit" form="gamevotes" value="Save Votes">
+		</div>
 		<nav>
 			<a href="/password">Set Password</a>
 			<form action="/logout" method="post">
@@ -26,7 +37,7 @@
 				{{#each gamelist}}
 					<div class="game-entry" data-id="{{game}}" data-vote="{{vote}}">
 						<span>{{game}}</span>
-						<input type="number" name="{{game}}" value="{{vote}}" autocomplete="off" onblur="onInputBlur(event)">
+						<input type="number" form="gamevotes" name="{{game}}" value="{{vote}}" autocomplete="off" onblur="onInputBlur(event)">
 					</div>
 				{{/each}}
 			</fieldset>
@@ -46,3 +57,8 @@
 	<script src="games.js"></script>
 </body>
 </html>
+<script>
+// Running this confirms we have Javascript, so reveal all elements that require it.
+var javascriptElements = document.querySelectorAll('.javascript-required');
+for (var i=0; i<javascriptElements.length; i++) javascriptElements[i].classList.remove('javascript-required');
+</script>

@@ -53,22 +53,33 @@ module.exports = function(app, route, connstr, saltRounds) {
   		});
     });
   }
-  
+
   function buildResult(user, client, done, res) {
-    var sql =
-      'SELECT games.game, vote ' +
-      'FROM games LEFT JOIN player_votes ' +
-      'ON games.game = player_votes.game AND player = $1 ' +
-      'ORDER BY vote DESC, game';
+    var sql = 'SELECT autosave FROM players WHERE player = $1';
     client.query({text: sql, values: [user]}, function(err, result) {
-      done();
       if (err) {
         return res.status(500).type('text/plain').send(err.toString());
       }
-      return res.render(modulename, {
-        username: user,
-        gamelist: result.rows.filter(row => row.vote !== null),
-        unranked: result.rows.filter(row => row.vote === null),
+      if (result.rows.length != 1) {
+        return res.status(500).type('text/plain').send('User ' + user + ' not found');
+      }
+      var autosave = result.rows[0].autosave;
+      var sql =
+        'SELECT games.game, vote ' +
+        'FROM games LEFT JOIN player_votes ' +
+        'ON games.game = player_votes.game AND player = $1 ' +
+        'ORDER BY vote DESC, game';
+      client.query({text: sql, values: [user]}, function(err, result) {
+        done();
+        if (err) {
+          return res.status(500).type('text/plain').send(err.toString());
+        }
+        return res.render(modulename, {
+          username: user,
+          autosave: autosave,
+          gamelist: result.rows.filter(row => row.vote !== null),
+          unranked: result.rows.filter(row => row.vote === null),
+        });
       });
     });
   }

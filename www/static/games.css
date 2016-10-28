@@ -25,11 +25,15 @@ header form {
 
 header > h1 {
   margin: 0;
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
-nav > a {
+header {
   font-size: small;
+}
+
+#autosave_check:checked ~ input {
+  visibility: hidden;
 }
 
 h2 {
@@ -83,4 +87,8 @@ h2 {
 .game-entry:hover > span {
   background-color: #ffff99;
   cursor: move;
+}
+
+.javascript-required {
+  display: none;
 }

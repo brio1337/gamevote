@@ -42,17 +42,18 @@ CREATE TABLE players (
 	player text PRIMARY KEY,
 	playing boolean NOT NULL DEFAULT TRUE,
 	weight double precision NOT NULL DEFAULT 1,
-	hashed_password text
+	hashed_password text,
+	autosave boolean DEFAULT TRUE
 );
 
 INSERT INTO players VALUES
-	('Brian', true, 1, null),
-	('Roland', true, 1, '$2a$10$qtZsvRtuJJ02QVpqb8V3uuiQE8iCdjPEmwiJOkJqFbKkTRWVQq9D6'),
-	('Ryan', true, 1, '$2a$10$qtZsvRtuJJ02QVpqb8V3uuiQE8iCdjPEmwiJOkJqFbKkTRWVQq9D6'),
-	('Sean', true, 1, '$2a$10$qtZsvRtuJJ02QVpqb8V3uuiQE8iCdjPEmwiJOkJqFbKkTRWVQq9D6'),
-	('Tony', true, 1, '$2a$10$qtZsvRtuJJ02QVpqb8V3uuiQE8iCdjPEmwiJOkJqFbKkTRWVQq9D6'),
-	('Mark', false, 0, '$2a$10$qtZsvRtuJJ02QVpqb8V3uuiQE8iCdjPEmwiJOkJqFbKkTRWVQq9D6'),
-	('Karen', false, 0, '$2a$10$qtZsvRtuJJ02QVpqb8V3uuiQE8iCdjPEmwiJOkJqFbKkTRWVQq9D6')
+	('Brian', TRUE, 1),
+	('Roland', TRUE, 1),
+	('Ryan', TRUE, 1),
+	('Sean', TRUE, 1),
+	('Tony', TRUE, 1),
+	('Mark', FALSE, 0),
+	('Karen', FALSE, 0)
 ;
 
 CREATE VIEW players_playing AS
@@ -118,4 +119,3 @@ FROM
 ORDER BY
 	real_score DESC
 ;
-
