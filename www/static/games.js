@@ -83,11 +83,17 @@ var unrankedSort = Sortable.create(document.getElementById('unrankedList'), {
 	onAdd: makeUnranked,
 });
 
+function onAjaxLoad(e) {
+	var xhr = e.target;
+	if (xhr.status === 401) window.location = xhr.responseURL;
+}
+
 function submitFormAsJSON(form, data, onLoadend) {
 	var req = new XMLHttpRequest();
 	req.open(form.method, form.action);
 	req.setRequestHeader('Content-Type', 'application/json');
 	req.addEventListener('loadend', onLoadend);
+	req.addEventListener('load', onAjaxLoad);
 	req.send(JSON.stringify(data));
 	return req;
 }

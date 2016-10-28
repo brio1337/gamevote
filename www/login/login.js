@@ -7,7 +7,8 @@ module.exports = function(app, route, connstr) {
   app.post(route, post);
 
   function get(req, res) {
-    return res.render(modulename);
+    // Consider this page to be an error page, like a 404 page, but 401 instead.
+    return res.status(401).render(modulename);
   }
 
   function post(req, res) {
