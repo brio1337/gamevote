@@ -14,7 +14,7 @@
 			</form>
 			<form id="gamevotes" name="gamevotes" action="/games" method="post">
 			</form>
-			<input class="javascript-required" form="autoform" id="autosave_check" type="checkbox">
+			<input class="javascript-required" form="autoform" id="autosave_check" type="checkbox" name="autosave" value="true">
 			{{#if autosave}}
 				<script>
 					document.querySelector('#autosave_check').checked = true;

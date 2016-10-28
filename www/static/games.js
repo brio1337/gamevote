@@ -1,4 +1,5 @@
-var votesForm = document.querySelector('#gamevotes');
+var votesForm = document.getElementById('gamevotes');
+var autosaveCheckbox = document.getElementById('autosave_check');
 
 function adjustRankToNeighbors(evt) {
 	// If the dropped item was from the unranked list, it doesn't have an input box, so create one.
@@ -25,14 +26,14 @@ function adjustRankToNeighbors(evt) {
 	itemInput.value = newVal;
 	item.dataset.vote = newVal;
 
-	onFormChanged(votesForm);
+	onVotesChanged();
 }
 
 function makeUnranked(evt) {
 	var item = evt.item;
 	item.querySelector('input').removeAttribute('form');
 	unrankedSort.sort(unrankedSort.toArray().sort());
-	onFormChanged(votesForm);
+	onVotesChanged();
 }
 
 function onInputBlur(evt) {
@@ -61,7 +62,11 @@ function onInputBlur(evt) {
 		gameEntry.parentNode.insertBefore(gameEntry, moveTo.nextElementSibling);
 	}
 
-	onFormChanged(votesForm);
+	onVotesChanged();
+}
+
+function onVotesChanged() {
+	onFormChanged(votesForm, autosaveCheckbox.checked);
 }
 
 var rankedSort = Sortable.create(document.getElementById('theList'), {
@@ -79,20 +84,13 @@ var unrankedSort = Sortable.create(document.getElementById('unrankedList'), {
 	onAdd: makeUnranked,
 });
 
-function onAjaxLoad(e) {
-	var xhr = e.target;
-	if (xhr.status === 401) window.location = xhr.responseURL;
+function onAutosaveChange(e) {
+	onFormChanged(autosaveCheckbox.form, true);
+	if (autosaveCheckbox.checked) checkSaveForm(votesForm);
 }
+autosaveCheckbox.addEventListener('change', onAutosaveChange);
 
-function submitFormAsJSON(form, data, onLoadend) {
-	var req = new XMLHttpRequest();
-	req.open(form.method, form.action);
-	req.setRequestHeader('Content-Type', 'application/json');
-	req.addEventListener('loadend', onLoadend);
-	req.addEventListener('load', onAjaxLoad);
-	req.send(JSON.stringify(data));
-	return req;
-}
+votesForm.addEventListener('submit', onSubmit);
 
 function onSubmit(e) {
 	e.preventDefault();
@@ -101,59 +99,66 @@ function onSubmit(e) {
 	var form = e.target;
 	var curSave = currentSavingForms[form.action];
 	if (curSave) {
-		curSave.lastStart = 0;
 		if (curSave.xhr) {
 			curSave.xhr.abort();
 			delete curSave.xhr;
 		}
-		if (curSave.timer)
+		if (curSave.timer) {
 			clearTimeout(curSave.timer);
 			delete curSave.timer;
+		}
 	}
-	onFormChanged(e.target);
+	onFormChanged(e.target, true);
 }
 
-function onAutoSaveChange(e) {
-	var autosaveCheckbox = e.target;
-	submitFormAsJSON(autosaveCheckbox.form, {autosave: autosaveCheckbox.checked});
-}
-
-votesForm.addEventListener('submit', onSubmit, false);
-document.querySelector('#autosave_check').addEventListener('change', onAutoSaveChange, false);
-
-
-// autosave!
-function autosaveNow(form, onLoadend) {
+function formDataToJSON(form) {
 	var data = {};
 	var formData = new FormData(form);
-	for (var pair of formData.entries()) {
-		data[pair[0]] = pair[1];
-	}
-	submitFormAsJSON(form, data, onLoadend);
+	for (var pair of formData.entries()) data[pair[0]] = pair[1];
+	return JSON.stringify(data);
 }
 
 // keyed by form.action
 var saveIntervalMilliseconds = 1000;
 var currentSavingForms = {};
 
-function onFormChanged(form) {
-	// called any time a vote changes.
-	// saves things in the background.
-	var curSave = currentSavingForms[form.action] || (currentSavingForms[form.action] = {});
-	curSave.dirty = true;
-	checkSaveForm();
+function getFormSaverForForm(form) {
+	return currentSavingForms[form.action] || (currentSavingForms[form.action] = {});
+}
 
-	function checkSaveForm() {
-		if (!curSave.dirty || curSave.xhr || curSave.timer) return;
+function checkSaveForm(form) {
+	var formSaver = getFormSaverForForm(form);
+	if (!formSaver.dirty || formSaver.xhr || formSaver.timer) return;
 
-		curSave.dirty = false;
-		curSave.xhr = autosaveNow(form, function() {
-			delete curSave.xhr;
-			checkSaveForm();
-		});
-		curSave.timer = setTimeout(function() {
-			curSave.timer = null;
-			checkSaveForm();
-		}, saveIntervalMilliseconds);
+	formSaver.dirty = false;
+	var xhr = formSaver.xhr = new XMLHttpRequest();
+	xhr.open(form.method, form.action);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.addEventListener('load', onLoad);
+	xhr.addEventListener('loadend', onLoadend);
+	xhr.send(formDataToJSON(form));
+
+	formSaver.timer = setTimeout(onDelayTimer, saveIntervalMilliseconds);
+
+	function onLoad() {
+		var xhr = formSaver.xhr;
+		if (xhr.status >= 400) window.location = xhr.responseURL;
 	}
+
+	function onLoadend() {
+		delete formSaver.xhr;
+		checkSaveForm(form);
+	}
+
+	function onDelayTimer() {
+		delete formSaver.timer;
+		checkSaveForm(form);
+	}
+}
+
+function onFormChanged(form, checkSave) {
+	// save things in the background, keeping track of outstanding saves, and batching with a timer.
+	var formSaver = getFormSaverForForm(form);
+	formSaver.dirty = true;
+	if (checkSave) checkSaveForm(form);
 }
