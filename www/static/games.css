@@ -72,6 +72,10 @@ h2 {
   padding: 1em;
 }
 
+#unrankedList input {
+  display: none;
+}
+
 .game-entry {
   display: table-row;
 }

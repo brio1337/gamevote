@@ -4,11 +4,7 @@ function adjustRankToNeighbors(evt) {
 	// If the dropped item was from the unranked list, it doesn't have an input box, so create one.
 	var item = evt.item;
 	var itemInput = item.querySelector('input');
-	if (!itemInput) {
-		itemInput = document.createElement('input');
-		itemInput.type = 'number';
-		item.appendChild(itemInput);
-	}
+	itemInput.setAttribute('form', 'gamevotes');
 
 	var newVal;
 	var prevItem = item.previousElementSibling;
@@ -34,7 +30,7 @@ function adjustRankToNeighbors(evt) {
 
 function makeUnranked(evt) {
 	var item = evt.item;
-	item.removeChild(item.querySelector('input'));
+	item.querySelector('input').removeAttribute('form');
 	unrankedSort.sort(unrankedSort.toArray().sort());
 	onFormChanged(votesForm);
 }
@@ -129,10 +125,9 @@ document.querySelector('#autosave_check').addEventListener('change', onAutoSaveC
 // autosave!
 function autosaveNow(form, onLoadend) {
 	var data = {};
-	var gameEntries = document.querySelectorAll('#theList .game-entry');
-	for (var i = 0; i < gameEntries.length; i++) {
-		var entryData = gameEntries[i].dataset;
-		data[entryData.id] = entryData.vote;
+	var formData = new FormData(form);
+	for (var pair of formData.entries()) {
+		data[pair[0]] = pair[1];
 	}
 	submitFormAsJSON(form, data, onLoadend);
 }
