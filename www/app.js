@@ -27,6 +27,8 @@ var routeData = {
 	password: [connstr, saltRounds],
 	games: [connstr],
 	autosave: [connstr],
+	players: [connstr],
+	winner: [connstr],
 };
 
 for (mod in routeData) {

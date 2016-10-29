@@ -36,7 +36,17 @@ header {
   visibility: hidden;
 }
 
-h2 {
+#winner-bar {
+  background-color: pink;
+  padding: .25em 1em;
+  margin: 0;
+}
+
+#winner-game {
+  font-weight: bold;
+}
+
+#inner h2 {
   background-color:  #22e4ff;
   padding: .25em 1em;
   margin: 0;

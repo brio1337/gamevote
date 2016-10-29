@@ -123,7 +123,9 @@ var saveIntervalMilliseconds = 1000;
 var currentSavingForms = {};
 
 function getFormSaverForForm(form) {
-	return currentSavingForms[form.action] || (currentSavingForms[form.action] = {});
+	var saver = currentSavingForms[form.action];
+	if (saver) return saver;
+	return currentSavingForms[form.action] = {};
 }
 
 function checkSaveForm(form) {
@@ -162,3 +164,20 @@ function onFormChanged(form, checkSave) {
 	formSaver.dirty = true;
 	if (checkSave) checkSaveForm(form);
 }
+
+// winner fetcher
+function fetchWinner() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('get', '/winner');
+	xhr.addEventListener('load', onLoadWinner);
+	xhr.addEventListener('loadend', setTimeout.bind(null, fetchWinner, 5000));
+	xhr.send();
+}
+
+function onLoadWinner(e) {
+	var xhr = e.target;
+	var winner = xhr.responseText;
+	document.getElementById('winner-game').textContent = winner;
+}
+
+fetchWinner();
