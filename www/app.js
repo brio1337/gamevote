@@ -27,7 +27,7 @@ var routeData = {
 	password: [connstr, saltRounds],
 	games: [connstr],
 	autosave: [connstr],
-	players: [connstr],
+	configure: [connstr],
 	winner: [connstr],
 };
 

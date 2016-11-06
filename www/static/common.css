@@ -13,7 +13,9 @@ body {
 }
 
 .admin-box {
-  display: inline-block;
+  float: left;
+  clear: both;
+  display: table;
   border-spacing: 1em;
 }
 

@@ -46,6 +46,11 @@ header {
   font-weight: bold;
 }
 
+#winner-bar > a {
+  font-size: small;
+  float: right;
+}
+
 #inner h2 {
   background-color:  #22e4ff;
   padding: .25em 1em;

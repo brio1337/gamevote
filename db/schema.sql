@@ -99,6 +99,9 @@ SELECT
 	END AS score,
 	weight
 FROM players_playing CROSS JOIN games LEFT JOIN player_votes USING (player, game)
+WHERE
+	coalesce((SELECT count(*) FROM players_playing) >= min_players, TRUE) AND
+	coalesce((SELECT count(*) FROM players_playing) <= max_players, TRUE)
 --WHERE (owner IS NULL OR EXISTS (SELECT * FROM players_playing WHERE player = ANY (owner)))
 ;
 

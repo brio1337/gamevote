@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Configure Game</title>
+	<link rel="stylesheet" type="text/css" href="common.css" />
+	<meta name="viewport" content="width=device-width">
+</head>
+<body>
+<form method="post">
+  <fieldset class="admin-box">
+  	<legend>Choose Players</legend>
+  	{{#each players}}
+  		<div class="admin-row">
+  			<input type="checkbox" name="{{player}}" id="{{player}}" {{#if playing}}checked{{/if}}>
+  			<label for="{{player}}">{{player}} ({{weight}}%)</label>
+  		</div>
+  	{{/each}}
+  </fieldset>
+  <fieldset class="admin-box">
+    <legend>Tables</legend>
+    <div class="admin-row">
+      <input type="radio" name="tables" id="one-table">
+      <label for="one-table">One Table</label>
+    </div>
+    <div class="admin-row">
+      <input type="radio" name="tables" id="two-tables">
+      <label for="two-tables">Two Tables</label>
+    </div>
+  </fieldset>
+  <div class="admin-box">
+    <input type="submit" value="Save">
+  </div>
+</form>
+</body>
+</html>
