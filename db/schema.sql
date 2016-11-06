@@ -43,7 +43,8 @@ CREATE TABLE players (
 	playing boolean NOT NULL DEFAULT TRUE,
 	weight double precision NOT NULL DEFAULT 1,
 	hashed_password text,
-	autosave boolean DEFAULT TRUE
+	autosave boolean NOT NULL DEFAULT TRUE,
+	num_tables integer NOT NULL DEFAULT 1
 );
 
 INSERT INTO players VALUES
