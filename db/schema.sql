@@ -153,8 +153,8 @@ WHERE
 )
 SELECT
 	dense_rank() OVER (ORDER BY real_score DESC NULLS LAST) AS rank,
-	player_group_1, left(game_1, 30) AS game_1,
-	player_group_2, left(game_2, 30) AS game_2,
+	player_group_1, game_1,
+	player_group_2, game_2,
 	trim(to_char(real_score, '9D99999')) AS score
 FROM
 	results
