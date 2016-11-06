@@ -13,13 +13,48 @@ module.exports = function(app, route, connstr) {
         done();
         return res.status(500).type('text/plain').send(err.toString());
       }
-      var sql = 'SELECT game FROM final_scores LIMIT 1';
-      client.query({text: sql}, function(err, result) {
-        done();
+      var sql = 'SELECT num_tables FROM players WHERE player = $1';
+      client.query({text: sql, values: [user]}, function(err, result) {
         if (err) {
+          done();
           return res.status(500).type('text/plain').send(err.toString());
         }
-        return res.send(result.rows[0].game);
+        if (result.rows.length === 0) {
+          done();
+          return res.status(400).type('text/plain').send('User not found');
+        }
+        var numTables = result.rows[0].num_tables;
+        var numTableInfo = {
+          1: {
+            sql: 'SELECT game FROM final_scores WHERE rank = 1',
+            toString: row => row.game,
+          },
+          2: {
+            sql: 'SELECT player_group_1, game_1, player_group_2, game_2 FROM final_scores_two_tables WHERE rank = 1',
+            toString: function(row) {
+              return row.player_group_1.join(', ') + ': ' + row.game_1 + ' / ' + row.player_group_2.join(', ') + ': ' + row.game_2;
+            },
+          },
+        }
+        client.query({text: numTableInfo[numTables].sql}, function(err, result) {
+          done();
+          if (err) {
+            return res.status(500).type('text/plain').send(err.toString());
+          }
+          var rows = result.rows;
+          if (rows.length === 0) {
+            return res.send('No winner');
+          }
+          if (rows.length === 1) {
+            return res.send(numTableInfo[numTables].toString(rows[0]));
+          }
+          var str = '';
+          for (var i = 0; i < rows.length; i++) {
+            if (i > 0) str += ' | ';
+            str += `Winner ${i+1}: ` + numTableInfo[numTables].toString(rows[i]);
+          }
+          return res.send(str);
+        });
       });
     });
   }
