@@ -176,8 +176,23 @@ function fetchWinner() {
 
 function onLoadWinner(e) {
 	var xhr = e.target;
-	var winner = xhr.responseText;
-	document.getElementById('winner-game').textContent = winner;
+	var winners = xhr.responseText.split('\n');
+	if (winners.length <= 1) {
+		document.getElementById('one-winner').style.display = 'block';
+		document.getElementById('multiple-winners').style.display = 'none';
+		document.getElementById('winner-game').textContent = winners.length === 1 ? winners[0] : 'No result';
+	} else {
+		document.getElementById('one-winner').style.display = 'none';
+		document.getElementById('multiple-winners').style.display = 'block';
+		var winnersDiv = document.getElementById('multiple-winners');
+		var winnerDivs = winnersDiv.querySelectorAll('div');
+		for (var i = 0; i < winnerDivs.length; i++) winnersDiv.removeChild(winnerDivs[i]);
+		for (var i = 0; i < winners.length; i++) {
+			var winnerDiv = document.createElement('div');
+			winnerDiv.textContent = winners[i];
+			winnersDiv.appendChild(winnerDiv);
+		};
+	}
 }
 
 fetchWinner();

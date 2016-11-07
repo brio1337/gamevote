@@ -40,6 +40,9 @@ header {
   background-color: pink;
   padding: .25em 1em;
   margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 #winner-game {
@@ -48,7 +51,10 @@ header {
 
 #winner-bar > a {
   font-size: small;
-  float: right;
+}
+
+#multiple-winners div {
+  font-weight: bold;
 }
 
 #inner h2 {

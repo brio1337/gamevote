@@ -42,18 +42,7 @@ module.exports = function(app, route, connstr) {
             return res.status(500).type('text/plain').send(err.toString());
           }
           var rows = result.rows;
-          if (rows.length === 0) {
-            return res.send('No winner');
-          }
-          if (rows.length === 1) {
-            return res.send(numTableInfo[numTables].toString(rows[0]));
-          }
-          var str = '';
-          for (var i = 0; i < rows.length; i++) {
-            if (i > 0) str += ' | ';
-            str += `Winner ${i+1}: ` + numTableInfo[numTables].toString(rows[i]);
-          }
-          return res.send(str);
+          return res.send(rows.map(numTableInfo[numTables].toString).join('\n'));
         });
       });
     });
