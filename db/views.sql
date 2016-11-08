@@ -32,17 +32,17 @@ SELECT
 	END AS score,
 	weight
 FROM players_playing CROSS JOIN games LEFT JOIN player_votes USING (player, game)
-WHERE
-	coalesce((SELECT count(*) FROM players_playing) >= min_players, TRUE) AND
-	coalesce((SELECT count(*) FROM players_playing) <= max_players, TRUE)
---WHERE (owner IS NULL OR EXISTS (SELECT * FROM players_playing WHERE player = ANY (owner)))
+WHERE (owner IS NULL OR EXISTS (SELECT * FROM players_playing WHERE player = ANY (owner)))
 ;
 
 CREATE OR REPLACE VIEW game_scores AS
 SELECT
 	game, sum(score * weight) / sum(weight) AS real_score
 FROM
-	player_scores
+	player_scores JOIN games USING (game)
+WHERE
+	coalesce((SELECT count(*) FROM players_playing) >= min_players, TRUE) AND
+	coalesce((SELECT count(*) FROM players_playing) <= max_players, TRUE)
 GROUP BY
 	game
 ;
