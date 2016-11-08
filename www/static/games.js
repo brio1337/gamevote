@@ -176,6 +176,10 @@ function fetchWinner() {
 
 function onLoadWinner(e) {
 	var xhr = e.target;
+	if (xhr.status >= 400) {
+		window.location = xhr.responseURL;
+		return;
+	}
 	var winners = xhr.responseText.split('\n');
 	if (winners.length <= 1) {
 		document.getElementById('one-winner').style.display = 'block';
