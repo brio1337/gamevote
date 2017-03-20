@@ -28,7 +28,7 @@ SELECT
 	CASE WHEN player = 'Ryan' THEN
 		percent_rank() OVER (PARTITION BY player ORDER BY coalesce(vote, 0))
 	ELSE
-		coalesce(vote / max(vote) OVER (PARTITION BY player), 0)
+		coalesce(vote / nullif(max(vote) OVER (PARTITION BY player), 0), 0)
 	END AS score,
 	weight
 FROM players_playing CROSS JOIN games LEFT JOIN player_votes USING (player, game)
