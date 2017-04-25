@@ -17,8 +17,8 @@ SELECT
 	player_list AS player_group_1,
 	(SELECT array_agg(player ORDER BY player) FROM players_playing WHERE player != ALL(player_list)) AS player_group_2
 FROM subgroups
-WHERE array_upper(player_list, 1) >= 2 AND
-array_upper(player_list, 1) * 2 - (SELECT count(*) FROM players_playing) BETWEEN -1 AND 1
+WHERE array_upper(player_list, 1) BETWEEN 2 AND (SELECT count(*) FROM players_playing) - 2
+	-- AND array_upper(player_list, 1) * 2 - (SELECT count(*) FROM players_playing) BETWEEN -1 AND 1
 ;
 
 CREATE OR REPLACE VIEW player_scores AS
