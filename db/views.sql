@@ -67,7 +67,6 @@ SELECT game, min_players, max_players, base_time, time_per_player,
 		sum(score * weight) FILTER (WHERE player = ANY(player_group_2)) AS score_2,
 		sum(weight) FILTER (WHERE player = ANY(player_group_2)) AS weight_2
 FROM player_groups CROSS JOIN games INNER JOIN player_scores USING (game)
-WHERE owner IS NULL OR EXISTS (SELECT * FROM players_playing WHERE player = ANY(owner))
 GROUP BY game, min_players, max_players, base_time, time_per_player, player_group_1, player_group_2
 ),
 results AS (
