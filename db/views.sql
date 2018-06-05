@@ -25,11 +25,7 @@ CREATE OR REPLACE VIEW player_scores AS
 SELECT
 	player,
 	game,
-	CASE WHEN player = 'Ryan' THEN
-		percent_rank() OVER (PARTITION BY player ORDER BY coalesce(vote, 0))
-	ELSE
-		coalesce(vote / nullif(max(vote) OVER (PARTITION BY player), 0), 0)
-	END AS score,
+	coalesce(vote / nullif(max(vote) OVER (PARTITION BY player), 0), 0) AS score,
 	weight
 FROM players_playing CROSS JOIN games LEFT JOIN player_votes USING (player, game)
 WHERE (owner IS NULL OR EXISTS (SELECT * FROM players_playing WHERE player = ANY (owner)))
