@@ -24,7 +24,7 @@ CREATE TEMPORARY TABLE games_import (
 	theme2 text
 );
 
-\copy games_import from 'gamelist.txt' (format csv, header)
+\copy games_import from 'seeds/gamelist.txt' (format csv, header)
 
 INSERT INTO games
 SELECT
