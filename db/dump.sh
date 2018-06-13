@@ -1,3 +1,1 @@
-ssh ubuntu@brio.software <<EOF | sed 's/COPY public./COPY games./' > games.dump
-pg_dump -U games --data-only
-EOF
+ssh ubuntu@brio.software 'pg_dump -U games -a' | sed 's/COPY public./COPY /' > games.dump
