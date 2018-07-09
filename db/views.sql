@@ -18,7 +18,6 @@ SELECT
 	(SELECT array_agg(player ORDER BY player) FROM players_playing WHERE player != ALL(player_list)) AS player_group_2
 FROM subgroups
 WHERE array_upper(player_list, 1) BETWEEN 2 AND (SELECT count(*) FROM players_playing) - 2
-	-- AND array_upper(player_list, 1) * 2 - (SELECT count(*) FROM players_playing) BETWEEN -1 AND 1
 ;
 
 CREATE OR REPLACE VIEW player_scores AS
@@ -45,45 +44,56 @@ GROUP BY
 
 CREATE OR REPLACE VIEW final_scores AS
 SELECT
-	dense_rank() OVER (ORDER BY real_score DESC) AS rank, game, trim(to_char(real_score, '9D99999')) AS score
+	dense_rank() OVER (ORDER BY real_score DESC) AS rank,
+	game,
+	trim(to_char(real_score, '9D99999')) AS score
 FROM
 	game_scores
 ORDER BY
-	real_score DESC
+	rank
 ;
 
 CREATE OR REPLACE VIEW final_scores_two_tables AS
 WITH
 player_group_game_scores AS (
-SELECT game, min_players, max_players, base_time, time_per_player,
-	player_group_1,
-		sum(score * weight) FILTER (WHERE player = ANY(player_group_1)) AS score_1,
-		sum(weight) FILTER (WHERE player = ANY(player_group_1)) AS weight_1,
-	player_group_2,
-		sum(score * weight) FILTER (WHERE player = ANY(player_group_2)) AS score_2,
-		sum(weight) FILTER (WHERE player = ANY(player_group_2)) AS weight_2
-FROM player_groups CROSS JOIN games INNER JOIN player_scores USING (game)
-GROUP BY game, min_players, max_players, base_time, time_per_player, player_group_1, player_group_2
+	SELECT game,
+		player_group_1,
+			sum(score * weight) FILTER (WHERE player = ANY(player_group_1)) AS score_1,
+			sum(weight) FILTER (WHERE player = ANY(player_group_1)) AS weight_1,
+		player_group_2,
+			sum(score * weight) FILTER (WHERE player = ANY(player_group_2)) AS score_2,
+			sum(weight) FILTER (WHERE player = ANY(player_group_2)) AS weight_2
+	FROM player_groups CROSS JOIN games INNER JOIN player_scores USING (game)
+	GROUP BY game, player_group_1, player_group_2
+	HAVING
+		coalesce(array_upper(player_group_1, 1) >= min_players, TRUE) AND
+		coalesce(array_upper(player_group_1, 1) <= max_players, TRUE)
 ),
 results AS (
-SELECT
-	player_group_1, t1.game AS game_1,
-	player_group_2, t2.game AS game_2,
-	(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS real_score
-FROM
-	player_group_game_scores t1 JOIN player_group_game_scores t2 USING (player_group_1, player_group_2)
-WHERE
-	coalesce(array_upper(player_group_1, 1) >= t1.min_players, TRUE) AND
-	coalesce(array_upper(player_group_1, 1) <= t1.max_players, TRUE) AND
-	coalesce(array_upper(player_group_2, 1) >= t2.min_players, TRUE) AND
-	coalesce(array_upper(player_group_2, 1) <= t2.max_players, TRUE)
+	SELECT
+		player_group_1, t1.game AS game_1,
+		player_group_2, t2.game AS game_2,
+		(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS score,
+		abs(array_upper(player_group_1, 1) - array_upper(player_group_2, 1)) AS balance
+	FROM
+		player_group_game_scores t1 JOIN player_group_game_scores t2 USING (player_group_1, player_group_2)
+),
+ranked_results AS (
+	SELECT
+		player_group_1, game_1,
+		player_group_2, game_2,
+		score, balance,
+		rank() OVER (PARTITION BY balance ORDER BY score DESC) AS rank,
+		first_value(balance) OVER (ORDER BY score DESC, balance) AS best_balance
+	FROM results
 )
 SELECT
-	dense_rank() OVER (ORDER BY real_score DESC NULLS LAST) AS rank,
+	rank,
 	player_group_1, game_1,
 	player_group_2, game_2,
-	trim(to_char(real_score, '9D99999')) AS score
+	trim(to_char(score, '9D99999')) AS score
 FROM
-	results
-ORDER BY
-	real_score DESC NULLS LAST
+	ranked_results
+WHERE
+	rank = 1 AND balance <= best_balance
+;
