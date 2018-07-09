@@ -1,1 +1,1 @@
-ssh ubuntu@brio.software 'pg_dump -U games -a' > games.dump
+ssh ubuntu@brio.software 'pg_dump -U games -n public' > games.dump

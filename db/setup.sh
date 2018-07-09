@@ -12,15 +12,20 @@ if [[ $os_name = Linux ]]; then
 	fi
 elif [[ $os_name = Darwin ]]; then
 	which psql > /dev/null || brew install postgresql
-	mkdir pgdata
 	export PGDATA=pgdata
-	initdb
-	pg_ctl start
+	if mkdir pgdata; then
+		initdb
+		pg_ctl start
+		createuser games
+	fi
+	pg_ctl status || pg_ctl start
 fi
 
-createuser games
+dropdb games
 createdb games -O games
 
-psql -U games -v ON_ERROR_STOP=1 -f schema.sql
-
-[ ! -f games.dump ] || psql -U games -v ON_ERROR_STOP=1 -f games.dump
+if [ -f games.dump ]; then
+	psql -U games -v ON_ERROR_STOP=1 -f games.dump
+else
+	psql -U games -v ON_ERROR_STOP=1 -f schema.sql
+fi
