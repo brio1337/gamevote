@@ -22,12 +22,17 @@ WHERE array_upper(player_list, 1) BETWEEN 2 AND (SELECT count(*) FROM players_pl
 
 CREATE OR REPLACE VIEW player_scores AS
 SELECT
-	player,
+	players_playing.player,
 	game,
-	coalesce(vote / nullif(max(vote) OVER (PARTITION BY player), 0), 0) AS score,
-	weight
-FROM players_playing CROSS JOIN games LEFT JOIN player_votes USING (player, game)
-WHERE (owner IS NULL OR EXISTS (SELECT * FROM players_playing WHERE player = ANY (owner)))
+	coalesce(vote / nullif(max(vote) OVER (PARTITION BY players_playing.player), 0), 0) AS score,
+	players_playing.weight,
+	game_owners.player AS owner
+FROM
+	players_playing
+	CROSS JOIN games
+	LEFT JOIN player_votes USING (player, game)
+	INNER JOIN game_owners USING (game)
+	INNER JOIN players_playing AS owners_available ON game_owners.player = owners_available.player
 ;
 
 CREATE OR REPLACE VIEW game_scores AS
@@ -56,7 +61,7 @@ ORDER BY
 CREATE OR REPLACE VIEW final_scores_two_tables AS
 WITH
 player_group_game_scores AS (
-	SELECT game,
+	SELECT game, owner,
 		player_group_1,
 			sum(score * weight) FILTER (WHERE player = ANY(player_group_1)) AS score_1,
 			sum(weight) FILTER (WHERE player = ANY(player_group_1)) AS weight_1,
@@ -64,19 +69,22 @@ player_group_game_scores AS (
 			sum(score * weight) FILTER (WHERE player = ANY(player_group_2)) AS score_2,
 			sum(weight) FILTER (WHERE player = ANY(player_group_2)) AS weight_2
 	FROM player_groups CROSS JOIN games INNER JOIN player_scores USING (game)
-	GROUP BY game, player_group_1, player_group_2
+	GROUP BY game, owner, player_group_1, player_group_2
 	HAVING
 		coalesce(array_upper(player_group_1, 1) >= min_players, TRUE) AND
 		coalesce(array_upper(player_group_1, 1) <= max_players, TRUE)
 ),
 results AS (
-	SELECT
-		player_group_1, t1.game AS game_1,
-		player_group_2, t2.game AS game_2,
+	SELECT DISTINCT
+		t1.player_group_1, t1.game AS game_1,
+		t2.player_group_2, t2.game AS game_2,
 		(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS score,
-		abs(array_upper(player_group_1, 1) - array_upper(player_group_2, 1)) AS balance
+		abs(array_upper(t1.player_group_1, 1) - array_upper(t2.player_group_2, 1)) AS balance
 	FROM
-		player_group_game_scores t1 JOIN player_group_game_scores t2 USING (player_group_1, player_group_2)
+		player_group_game_scores t1 JOIN player_group_game_scores t2 ON
+			t1.player_group_1 = t2.player_group_1 AND
+			t1.player_group_2 = t2.player_group_2 AND
+			NOT (t1.game = t2.game AND t1.owner = t2.owner)
 ),
 ranked_results AS (
 	SELECT

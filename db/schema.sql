@@ -2,7 +2,6 @@ CREATE TABLE games (
 	game text PRIMARY KEY,
 	min_players integer,
 	max_players integer,
-	owner text[],
 	base_time integer,
 	time_per_player integer
 );
@@ -21,6 +20,12 @@ CREATE TABLE player_votes (
 	game text REFERENCES games,
 	vote double precision,
 	PRIMARY KEY (player, game)
+);
+
+CREATE TABLE game_owners (
+	game text REFERENCES games,
+	player text REFERENCES players,
+	PRIMARY KEY (game, player)
 );
 
 \ir views.sql

@@ -15,9 +15,14 @@ DECLARE
 BEGIN
   INSERT INTO players VALUES ('Alice'), ('Bob'), ('Carol');
   INSERT INTO games VALUES
-    ('g1', 2, 4, '{Alice}'),
-    ('g2', 2, 4, '{Alice}'),
-    ('g3', 2, 4, '{Alice}');
+    ('g1', 2, 4),
+    ('g2', 2, 4),
+    ('g3', 2, 4);
+
+  INSERT INTO game_owners VALUES
+    ('g1', 'Alice'),
+    ('g2', 'Alice'),
+    ('g3', 'Alice');
 
   INSERT INTO player_votes VALUES
     ('Alice', 'g1', 10),
@@ -45,9 +50,14 @@ BEGIN
     ('Frank');
 
   INSERT INTO games VALUES
-    ('g1', 2, 4, '{Alice}'),
-    ('g2', 2, 5, '{Alice}'),
-    ('g3', 2, 6, '{Alice}');
+    ('g1', 2, 4),
+    ('g2', 2, 5),
+    ('g3', 2, 6);
+
+  INSERT INTO game_owners VALUES
+    ('g1', 'Alice'),
+    ('g2', 'Alice'),
+    ('g3', 'Alice');
 
   INSERT INTO player_votes VALUES
     ('Alice', 'g1', 1),
@@ -64,5 +74,54 @@ BEGIN
   -- PERFORM pg_temp.assert_equal('g1', r.game_1);
 END
 $$;
-SELECT * FROM final_scores_two_tables;
+ROLLBACK;
+
+-- Everyone would like to play 'awesome', but 2 people have to play 'terrible'.
+BEGIN;
+DO $$
+DECLARE
+  r record;
+BEGIN
+  INSERT INTO players VALUES
+    ('Alice'),
+    ('Bob'),
+    ('Carol'),
+    ('David');
+
+  INSERT INTO games VALUES
+    ('awesome', 2, 2),
+    ('terrible', 2, 2);
+
+  INSERT INTO game_owners VALUES
+    ('awesome', 'Alice'),
+    ('terrible', 'Alice');
+
+  INSERT INTO player_votes VALUES
+    ('Alice', 'awesome', 1),
+    ('Bob', 'awesome', 1),
+    ('Carol', 'awesome', 1),
+    ('David', 'awesome', 1),
+    ('Bob', 'terrible', 0.1),
+    ('David', 'terrible', 0.1);
+
+  SELECT * INTO r FROM final_scores_two_tables;
+
+  PERFORM pg_temp.assert_equal('{Alice,Carol}', r.player_group_1);
+  PERFORM pg_temp.assert_equal('awesome', r.game_1);
+  PERFORM pg_temp.assert_equal('{Bob,David}', r.player_group_2);
+  PERFORM pg_temp.assert_equal('terrible', r.game_2);
+
+  -- Now David buys a copy so everyone can play 'awesome'
+  INSERT INTO game_owners VALUES
+    ('awesome', 'David');
+
+  SELECT * INTO r FROM final_scores_two_tables ORDER BY player_group_1 LIMIT 1;
+
+  PERFORM pg_temp.assert_equal('{Alice,Bob}', r.player_group_1);
+  PERFORM pg_temp.assert_equal('awesome', r.game_1);
+  PERFORM pg_temp.assert_equal('{Carol,David}', r.player_group_2);
+  PERFORM pg_temp.assert_equal('awesome', r.game_2);
+
+END
+$$;
 ROLLBACK;
