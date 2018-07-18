@@ -58,50 +58,53 @@ ORDER BY
 	rank
 ;
 
+CREATE OR REPLACE VIEW player_group_game_scores AS
+SELECT game, owner,
+	player_group_1,
+		sum(score * weight) FILTER (WHERE player = ANY(player_group_1)) AS score_1,
+		sum(weight) FILTER (WHERE player = ANY(player_group_1)) AS weight_1,
+	player_group_2,
+		sum(score * weight) FILTER (WHERE player = ANY(player_group_2)) AS score_2,
+		sum(weight) FILTER (WHERE player = ANY(player_group_2)) AS weight_2
+FROM player_groups CROSS JOIN games INNER JOIN player_scores USING (game)
+GROUP BY game, owner, player_group_1, player_group_2
+HAVING
+	coalesce(array_upper(player_group_1, 1) >= min_players, TRUE) AND
+	coalesce(array_upper(player_group_1, 1) <= max_players, TRUE)
+;
+
+CREATE OR REPLACE VIEW results_two_tables AS
+SELECT DISTINCT
+	t1.player_group_1, t1.game AS game_1,
+	t2.player_group_2, t2.game AS game_2,
+	(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS score,
+	abs(array_upper(t1.player_group_1, 1) - array_upper(t2.player_group_2, 1)) AS balance
+FROM
+	player_group_game_scores t1 JOIN player_group_game_scores t2 ON
+		t1.player_group_1 = t2.player_group_1 AND
+		t1.player_group_2 = t2.player_group_2 AND
+		NOT (t1.game = t2.game AND t1.owner = t2.owner)
+;
+
+CREATE OR REPLACE VIEW ranked_results_two_tables AS
+SELECT
+	player_group_1, game_1,
+	player_group_2, game_2,
+	score, balance,
+	rank() OVER (PARTITION BY balance ORDER BY score DESC) AS rank,
+	first_value(balance) OVER (ORDER BY score DESC, balance) AS best_balance
+FROM
+	results_two_tables
+;
+
 CREATE OR REPLACE VIEW final_scores_two_tables AS
-WITH
-player_group_game_scores AS (
-	SELECT game, owner,
-		player_group_1,
-			sum(score * weight) FILTER (WHERE player = ANY(player_group_1)) AS score_1,
-			sum(weight) FILTER (WHERE player = ANY(player_group_1)) AS weight_1,
-		player_group_2,
-			sum(score * weight) FILTER (WHERE player = ANY(player_group_2)) AS score_2,
-			sum(weight) FILTER (WHERE player = ANY(player_group_2)) AS weight_2
-	FROM player_groups CROSS JOIN games INNER JOIN player_scores USING (game)
-	GROUP BY game, owner, player_group_1, player_group_2
-	HAVING
-		coalesce(array_upper(player_group_1, 1) >= min_players, TRUE) AND
-		coalesce(array_upper(player_group_1, 1) <= max_players, TRUE)
-),
-results AS (
-	SELECT DISTINCT
-		t1.player_group_1, t1.game AS game_1,
-		t2.player_group_2, t2.game AS game_2,
-		(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS score,
-		abs(array_upper(t1.player_group_1, 1) - array_upper(t2.player_group_2, 1)) AS balance
-	FROM
-		player_group_game_scores t1 JOIN player_group_game_scores t2 ON
-			t1.player_group_1 = t2.player_group_1 AND
-			t1.player_group_2 = t2.player_group_2 AND
-			NOT (t1.game = t2.game AND t1.owner = t2.owner)
-),
-ranked_results AS (
-	SELECT
-		player_group_1, game_1,
-		player_group_2, game_2,
-		score, balance,
-		rank() OVER (PARTITION BY balance ORDER BY score DESC) AS rank,
-		first_value(balance) OVER (ORDER BY score DESC, balance) AS best_balance
-	FROM results
-)
 SELECT
 	rank,
 	player_group_1, game_1,
 	player_group_2, game_2,
 	trim(to_char(score, '9D99999')) AS score
 FROM
-	ranked_results
+	ranked_results_two_tables
 WHERE
 	rank = 1 AND balance <= best_balance
 ;
