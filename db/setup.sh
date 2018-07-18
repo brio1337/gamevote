@@ -21,8 +21,10 @@ elif [[ $os_name = Darwin ]]; then
 	pg_ctl status || pg_ctl start
 fi
 
-dropdb games
+dropdb --if-exists games
 createdb games -O games
+psql games -v ON_ERROR_STOP=1 <<< "ALTER SYSTEM SET work_mem = '64MB';"
+pg_ctl reload
 
 if [ -f games.dump ]; then
 	psql -U games -v ON_ERROR_STOP=1 -f games.dump
