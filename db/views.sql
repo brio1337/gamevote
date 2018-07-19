@@ -37,7 +37,7 @@ FROM
 
 CREATE OR REPLACE VIEW game_scores AS
 SELECT
-	game, sum(score * weight) / sum(weight) AS real_score
+	game, sum(score * weight) / sum(weight) AS score
 FROM
 	player_scores JOIN games USING (game)
 WHERE
@@ -47,15 +47,13 @@ GROUP BY
 	game
 ;
 
-CREATE OR REPLACE VIEW final_scores AS
+CREATE OR REPLACE VIEW ranked_results AS
 SELECT
-	dense_rank() OVER (ORDER BY real_score DESC) AS rank,
+	dense_rank() OVER (ORDER BY score DESC) AS rank,
 	game,
-	trim(to_char(real_score, '9D99999')) AS score
+	score
 FROM
 	game_scores
-ORDER BY
-	rank
 ;
 
 CREATE OR REPLACE VIEW player_group_game_scores AS
@@ -78,7 +76,7 @@ SELECT DISTINCT
 	t1.player_group_1, t1.game AS game_1,
 	t2.player_group_2, t2.game AS game_2,
 	(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS score,
-	abs(array_upper(t1.player_group_1, 1) - array_upper(t2.player_group_2, 1)) AS balance
+	abs(array_upper(t1.player_group_1, 1) - array_upper(t2.player_group_2, 1)) + 1 AS balance
 FROM
 	player_group_game_scores t1 JOIN player_group_game_scores t2 ON
 		t1.player_group_1 = t2.player_group_1 AND
@@ -91,20 +89,42 @@ SELECT
 	player_group_1, game_1,
 	player_group_2, game_2,
 	score, balance,
-	rank() OVER (PARTITION BY balance ORDER BY score DESC) AS rank,
-	first_value(balance) OVER (ORDER BY score DESC, balance) AS best_balance
+	dense_rank() OVER (PARTITION BY balance ORDER BY score DESC) AS rank
 FROM
 	results_two_tables
 ;
 
-CREATE OR REPLACE VIEW final_scores_two_tables AS
+CREATE OR REPLACE VIEW top_results_all_tables AS
 SELECT
-	rank,
+	(SELECT array_agg(player ORDER BY player) FROM players_playing) AS player_group_1,
+	game AS game_1,
+	NULL AS player_group_2,
+	NULL AS game_2,
+	score, 0 AS balance
+FROM
+	ranked_results
+WHERE
+	rank = 1
+UNION ALL
+SELECT
 	player_group_1, game_1,
 	player_group_2, game_2,
-	trim(to_char(score, '9D99999')) AS score
+	score, balance
 FROM
 	ranked_results_two_tables
 WHERE
-	rank = 1 AND balance <= best_balance
+	rank = 1
+;
+
+CREATE OR REPLACE VIEW top_results_best_tables AS
+WITH top_results_with_best_balance AS (
+	SELECT
+		player_group_1, game_1, player_group_2, game_2, score, balance,
+		first_value(balance) OVER (ORDER BY score DESC, balance) AS best_balance
+	FROM
+		top_results_all_tables
+)
+SELECT player_group_1, game_1, player_group_2, game_2, score
+FROM top_results_with_best_balance
+WHERE balance <= best_balance
 ;
