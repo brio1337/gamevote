@@ -11,8 +11,7 @@ CREATE TABLE players (
 	playing boolean NOT NULL DEFAULT TRUE,
 	weight double precision NOT NULL DEFAULT 1,
 	hashed_password text,
-	autosave boolean NOT NULL DEFAULT TRUE,
-	num_tables integer NOT NULL DEFAULT 1
+	autosave boolean NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE player_votes (

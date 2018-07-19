@@ -15,7 +15,7 @@ module.exports = function(app, route, connstr) {
 				done();
 				return res.status(500).type('text/plain').send(err.toString());
 			}
-			var sql = `SELECT player, playing, weight*100 AS weight, num_tables
+			var sql = `SELECT player, playing, weight*100 AS weight
 				FROM players ORDER BY player`;
 			client.query({text: sql}, function(err, result) {
 				done();
@@ -26,11 +26,8 @@ module.exports = function(app, route, connstr) {
 				if (!userRow) {
 					return res.status(500).type('text/plain').send('No current user');
 				}
-				var numTables = userRow.num_tables;
 				return res.render(modulename, {
 					players: result.rows,
-					one_table: numTables === 1,
-					two_tables: numTables === 2,
 				});
 			});
 		});
@@ -50,13 +47,11 @@ module.exports = function(app, route, connstr) {
 			var values = [];
 			var pos = 1;
 			for (var a in req.body) {
-				if (a === 'tables') continue;
 				if (pos > 1) sql += ',';
 				sql += '$' + pos++;
 				values.push(a);
 			}
-			sql += ')), num_tables = CASE player WHEN $' + pos++ + ' THEN $' + pos++ + ' ELSE num_tables END';
-			values.push(user, req.body.tables);
+			sql += '))';
 			client.query({text: sql, values: values}, function(err, result) {
 				done();
 				if (err) {
