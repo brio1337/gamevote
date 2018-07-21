@@ -8,5 +8,4 @@ psql <<SQL
 	CREATE SCHEMA public;
 SQL
 
-psql -v ON_ERROR_STOP=1 -f schema.sql
 [ ! -f games.dump ] || psql -v ON_ERROR_STOP=1 -f games.dump
