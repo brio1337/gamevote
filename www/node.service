@@ -1,0 +1,13 @@
+[Unit]
+Description=Node.js Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node app.js
+Restart=always
+SyslogIdentifier=nodejs
+User=ubuntu
+WorkingDirectory=/home/ubuntu/gamevote/www
+
+[Install]
+WantedBy=multi-user.target
