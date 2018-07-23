@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // config
-var connstr = 'postgresql://games@/games';
+var connstr = fs.readFileSync('dbconnstr.txt', 'UTF-8').trim();
 var saltRounds = 10;
 
 // load middleware

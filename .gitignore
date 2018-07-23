@@ -1,3 +1,6 @@
 node_modules/
 *.pem
 *.log
+www/dbconnstr.txt
+db/games.dump
+db/pgdata
