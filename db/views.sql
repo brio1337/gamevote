@@ -72,7 +72,7 @@ HAVING
 ;
 
 CREATE OR REPLACE VIEW results_two_tables AS
-SELECT DISTINCT
+SELECT
 	t1.player_group_1, t1.game AS game_1,
 	t2.player_group_2, t2.game AS game_2,
 	(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS score,
@@ -105,7 +105,7 @@ FROM
 	ranked_results
 WHERE
 	rank = 1
-UNION ALL
+UNION
 SELECT
 	player_group_1, game_1,
 	player_group_2, game_2,
