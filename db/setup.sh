@@ -13,6 +13,8 @@ if [[ $os_name = Linux ]]; then
 elif [[ $os_name = Darwin ]]; then
 	which psql > /dev/null || brew install postgresql
 	export PGDATA=pgdata
+	! pg_ctl status || pg_ctl stop
+	rm -rf pgdata
 	if mkdir pgdata; then
 		initdb
 		pg_ctl start
