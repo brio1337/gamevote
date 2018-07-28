@@ -7,4 +7,4 @@ createdb games_test
 $PSQL -U games -d games_test -f schema.sql
 $PSQL -U games -d games_test -f tests.sql
 
-echo "Success"
+echo "All tests passed"

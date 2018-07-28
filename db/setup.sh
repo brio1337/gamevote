@@ -25,11 +25,14 @@ fi
 
 dropdb --if-exists games
 createdb games -O games
-psql games -v ON_ERROR_STOP=1 <<< "ALTER SYSTEM SET work_mem = '64MB';"
+
+PSQL="psql -v ON_ERROR_STOP=1"
+
+$PSQL games <<< "ALTER SYSTEM SET work_mem = '64MB';"
 pg_ctl reload
 
 if [ -f games.dump ]; then
-	psql -U games -v ON_ERROR_STOP=1 -f games.dump
+	$PSQL -U games -f games.dump
 else
-	psql -U games -v ON_ERROR_STOP=1 -f schema.sql
+	$PSQL -U games -f schema.sql
 fi
