@@ -27,6 +27,8 @@ FROM
 	game_owners JOIN players_playing USING (player)
 ;
 
+DROP VIEW IF EXISTS player_scores CASCADE;
+
 CREATE OR REPLACE VIEW player_scores AS
 SELECT
 	player, weight, game, owner,
@@ -66,42 +68,44 @@ SELECT
 		sum(weight) FILTER (WHERE player = ANY(player_group_1)) AS weight_1,
 	player_group_2,
 		sum(score * weight) FILTER (WHERE player = ANY(player_group_2)) AS score_2,
-		sum(weight) FILTER (WHERE player = ANY(player_group_2)) AS weight_2
+		sum(weight) FILTER (WHERE player = ANY(player_group_2)) AS weight_2,
+		coalesce(array_upper(player_group_1, 1) >= min_players, TRUE) AND
+		coalesce(array_upper(player_group_1, 1) <= max_players, TRUE) AS would_play_1,
+		coalesce(array_upper(player_group_2, 1) >= min_players, TRUE) AND
+		coalesce(array_upper(player_group_2, 1) <= max_players, TRUE) AS would_play_2
 FROM
-	player_groups
-	CROSS JOIN games_available
-	INNER JOIN player_scores USING (game, owner)
+	player_groups, games_available
+	JOIN games USING (game)
+	JOIN player_scores USING (game, owner)
 GROUP BY
-	game, owner, player_group_1, player_group_2
+	game, owner, player_group_1, player_group_2, would_play_1, would_play_2
 ;
 
 CREATE OR REPLACE VIEW results_two_tables AS
+WITH player_group_game_scores AS (SELECT * FROM player_group_game_scores)
 SELECT
 	player_group_1, t1.game AS game_1,
 	player_group_2, t2.game AS game_2,
 	(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS score,
 	abs(array_upper(player_group_1, 1) - array_upper(player_group_2, 1)) + 1 AS balance
 FROM
-	player_group_game_scores t1
-	JOIN player_group_game_scores t2 USING (player_group_1, player_group_2)
-	JOIN games g1 ON g1.game = t1.game
-	JOIN games g2 ON g2.game = t2.game
+	player_group_game_scores t1 JOIN
+	player_group_game_scores t2 USING (player_group_1, player_group_2)
 WHERE
-	coalesce(array_upper(player_group_1, 1) >= g1.min_players, TRUE) AND
-	coalesce(array_upper(player_group_1, 1) <= g1.max_players, TRUE) AND
-	coalesce(array_upper(player_group_2, 1) >= g2.min_players, TRUE) AND
-	coalesce(array_upper(player_group_2, 1) <= g2.max_players, TRUE) AND
+	t1.would_play_1 AND t2.would_play_2 AND
 	NOT (t1.game = t2.game AND t1.owner = t2.owner)
 ;
 
 CREATE OR REPLACE VIEW ranked_results_two_tables AS
+WITH
+	results_two_tables AS (SELECT * FROM results_two_tables),
+	top_each_balance AS (SELECT balance, max(score) AS score FROM results_two_tables GROUP BY balance)
 SELECT
 	player_group_1, game_1,
 	player_group_2, game_2,
-	score, balance,
-	dense_rank() OVER (PARTITION BY balance ORDER BY score DESC) AS rank
+	score, balance
 FROM
-	results_two_tables
+	results_two_tables JOIN top_each_balance USING (score, balance)
 ;
 
 CREATE OR REPLACE VIEW top_results_all_tables AS
@@ -122,8 +126,6 @@ SELECT
 	score, balance
 FROM
 	ranked_results_two_tables
-WHERE
-	rank = 1
 ;
 
 CREATE OR REPLACE VIEW top_results_best_tables AS
