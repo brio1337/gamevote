@@ -1,4 +1,12 @@
 
+create or replace function pg_temp.assert(boolean) returns void as $$
+begin
+  IF NOT $1 THEN
+    raise exception 'assert failure: not % is true', $1 using errcode = 'triggered_action_exception';
+  END IF;
+end
+$$ language plpgsql set search_path from current immutable;
+
 create or replace function pg_temp.assert_equal(ANYELEMENT, ANYELEMENT) returns void as $$
 begin
   IF $1 IS DISTINCT FROM $2 THEN
@@ -7,6 +15,16 @@ begin
 end
 $$ language plpgsql set search_path from current immutable;
 
+BEGIN;
+DO $$
+BEGIN
+  PERFORM pg_temp.assert(in_birthday_window(make_date(2018, 1, 1), 1, 1));
+  PERFORM pg_temp.assert(not in_birthday_window(make_date(2018, 1, 1), 2, 1));
+  PERFORM pg_temp.assert(in_birthday_window(make_date(2018, 1, 1), 12, 29));
+  PERFORM pg_temp.assert(not in_birthday_window(make_date(2018, 1, 1), 2, 29));
+END
+$$;
+ROLLBACK;
 
 BEGIN;
 DO $$
@@ -30,7 +48,6 @@ BEGIN
 
   SELECT rank, game, score INTO r FROM ranked_results WHERE rank = 1 LIMIT 1;
 
-  PERFORM pg_temp.assert_equal(1::bigint, r.rank);
   PERFORM pg_temp.assert_equal('g1', r.game);
 END
 $$;

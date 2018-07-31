@@ -1,5 +1,36 @@
+DROP VIEW IF EXISTS players_playing CASCADE;
+
+CREATE OR REPLACE FUNCTION in_birthday_window(the_date date, birth_month integer, birth_day integer)
+RETURNS BOOLEAN AS $$
+DECLARE
+	the_year integer := extract(year from the_date)::integer;
+	the_month integer := extract(month from the_date)::integer;
+	test_year integer;
+	nearest_birth_date date;
+BEGIN
+	test_year := the_year + CASE
+		WHEN the_month >= 12 AND birth_month <= 1 THEN 1
+		WHEN the_month <= 1 AND birth_month >= 12 THEN -1
+		ELSE 0
+	END;
+	BEGIN
+		nearest_birth_date := make_date(test_year, birth_month, birth_day);
+	EXCEPTION WHEN OTHERS THEN
+		nearest_birth_date := make_date(test_year, birth_month + 1, 1);
+	END;
+	RETURN abs(nearest_birth_date - the_date) <= 4;
+END;
+$$ LANGUAGE plpgsql STABLE;
+
 CREATE OR REPLACE VIEW players_playing AS
-SELECT * FROM players WHERE playing;
+SELECT
+	player,
+	CASE
+		WHEN in_birthday_window(current_date, birth_month, birth_day) THEN weight * 2
+		ELSE weight
+	END AS weight
+FROM players
+WHERE playing;
 
 CREATE OR REPLACE VIEW player_groups AS
 WITH RECURSIVE subgroups (player_list) AS (
@@ -26,8 +57,6 @@ SELECT
 FROM
 	game_owners JOIN players_playing USING (player)
 ;
-
-DROP VIEW IF EXISTS player_scores CASCADE;
 
 CREATE OR REPLACE VIEW player_scores AS
 SELECT
