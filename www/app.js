@@ -1,5 +1,4 @@
 var fs = require('fs');
-var https = require('https');
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -39,13 +38,4 @@ app.get('/', function(req, res) {
 	res.redirect(req.session.user ? '/games' : '/login');
 });
 
-https.createServer({
-	key: fs.readFileSync('key.pem'),
-	cert: fs.readFileSync('cert.pem'),
-}, app).listen(443);
-
-var redirectToSecureApp = express();
-redirectToSecureApp.all('*', function(req, res) {
-	return res.redirect('https://' + req.hostname + req.originalUrl);
-});
-redirectToSecureApp.listen(80);
+module.exports = app;

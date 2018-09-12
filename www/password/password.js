@@ -1,5 +1,5 @@
 var pg = require('pg');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var modulename = require('../util').filenameToModulename(__filename);
 
 module.exports = function(app, route, connstr, saltRounds) {

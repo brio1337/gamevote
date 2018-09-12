@@ -4,7 +4,8 @@
   "description": "Game voting site",
   "main": "app.js",
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "aws-serverless-express": "^3.3.5",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "express": "^4.13.4",
     "express-session": "^1.14.1",
@@ -13,7 +14,7 @@
     "pg": "^4.5.2"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.local.js"
   },
   "author": "brio",
   "license": "ISC",
