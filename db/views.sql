@@ -28,7 +28,8 @@ SELECT
 	CASE
 		WHEN in_birthday_window(current_date, birth_month, birth_day) THEN weight * 2
 		ELSE weight
-	END AS weight
+	END AS weight,
+	allow_abstain
 FROM players
 WHERE playing;
 
@@ -60,8 +61,9 @@ FROM
 
 CREATE OR REPLACE VIEW player_scores AS
 SELECT
-	player, weight, game, owner,
-	coalesce(vote / nullif(max(vote) OVER (PARTITION BY player), 0), 0) AS score
+	player, game, owner,
+	coalesce(vote / nullif(max(vote) OVER (PARTITION BY player), 0), 0) AS score,
+	CASE WHEN vote IS NULL AND allow_abstain THEN NULL ELSE weight END AS weight
 FROM
 	players_playing
 	CROSS JOIN games_available
@@ -70,7 +72,7 @@ FROM
 
 CREATE OR REPLACE VIEW game_scores AS
 SELECT
-	game, sum(score * weight) / sum(weight) AS score
+	game, coalesce(sum(score * weight) / sum(weight), 0) AS score
 FROM
 	player_scores JOIN games USING (game)
 WHERE
@@ -115,7 +117,7 @@ WITH player_group_game_scores AS (SELECT * FROM player_group_game_scores)
 SELECT
 	player_group_1, t1.game AS game_1,
 	player_group_2, t2.game AS game_2,
-	(t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2) AS score,
+	coalesce((t1.score_1 + t2.score_2) / (t1.weight_1 + t2.weight_2), 0) AS score,
 	abs(array_upper(player_group_1, 1) - array_upper(player_group_2, 1)) + 1 AS balance
 FROM
 	player_group_game_scores t1 JOIN

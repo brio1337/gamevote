@@ -18,7 +18,7 @@ elif [[ $os_name = Darwin ]]; then
 	if mkdir pgdata; then
 		initdb
 		pg_ctl start
-		createuser games
+		createuser --createrole games
 	fi
 	pg_ctl status || pg_ctl start
 fi

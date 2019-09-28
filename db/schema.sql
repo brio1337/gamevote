@@ -13,7 +13,8 @@ CREATE TABLE players (
 	hashed_password text,
 	autosave boolean NOT NULL DEFAULT TRUE,
 	birth_month integer,
-	birth_day integer
+	birth_day integer,
+	allow_abstain boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE player_votes (
@@ -30,3 +31,5 @@ CREATE TABLE game_owners (
 );
 
 \ir views.sql
+\ir roles.sql
+\ir api.sql

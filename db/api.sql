@@ -1,0 +1,7 @@
+DROP SCHEMA IF EXISTS api CASCADE;
+CREATE SCHEMA api;
+GRANT USAGE ON SCHEMA api TO anon;
+
+CREATE VIEW api.winners AS SELECT * FROM top_results_best_tables;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA api TO anon;
