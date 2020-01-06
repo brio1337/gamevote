@@ -15,7 +15,7 @@ services:
     build:
       context: www
       dockerfile: Dockerfile
-    image: result/latest
+    image: gamevote_node
     container_name: gamevote_node
     ports:
       - 8080:8080
