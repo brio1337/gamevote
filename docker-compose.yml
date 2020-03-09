@@ -5,12 +5,19 @@ services:
     container_name: gamevote_nginx
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     ports:
       - 80:80
       - 443:443
     depends_on:
       - api
       - web
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
   web:
     build:
       context: www
