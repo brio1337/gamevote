@@ -31,7 +31,7 @@ module.exports = function(app, route, connstr) {
   	pg.connect(connstr, function(err, client, done) {
   		if (err) {
   			done();
-  			return res.status(500).render(modulename, {errorMsg: err.toString()});
+  			return res.status(500).render(modulename, {errorMsg: `error connecting to database: ${err.message}`});
   		}
   		var sql = 'SELECT hashed_password FROM players WHERE player = $1';
   		client.query({text: sql, values: [username]}, function(err, result) {
@@ -40,7 +40,7 @@ module.exports = function(app, route, connstr) {
   				return res.status(500).render(modulename, {errorMsg: err.toString()});
   			}
   			if (result.rows.length === 0) {
-  				return res.status(400).render(modulename, {errorMsg: 'Name not found'});
+  				return res.status(404).render(modulename, {errorMsg: 'Name not found'});
   			}
   			var dbHashedPassword = result.rows[0].hashed_password;
   			if (!dbHashedPassword) {

@@ -29,9 +29,30 @@ ROLLBACK;
 BEGIN;
 DO $$
 DECLARE
-  r record;
+  cursor REFCURSOR;
+  record RECORD;
 BEGIN
-  INSERT INTO players VALUES ('Alice'), ('Bob'), ('Carol');
+  INSERT INTO libraries VALUES
+    ('BGA');
+
+  INSERT INTO gaming_groups VALUES
+    ('Geeks', NULL),
+    ('Nerds', 'BGA');
+
+  INSERT INTO players VALUES
+    ('Alice'),
+    ('Bob'),
+    ('Carol'),
+    ('David'),
+    ('Emily');
+
+  INSERT INTO group_players VALUES
+    ('Geeks', 'Alice'),
+    ('Geeks', 'Bob'),
+    ('Geeks', 'Carol'),
+    ('Nerds', 'David'),
+    ('Nerds', 'Emily');
+
   INSERT INTO games VALUES
     ('g1', 2, 4),
     ('g2', 2, 4),
@@ -42,13 +63,26 @@ BEGIN
     ('g2', 'Alice'),
     ('g3', 'Alice');
 
+  INSERT INTO library_games VALUES
+    ('BGA', 'g1'),
+    ('BGA', 'g2');
+
   INSERT INTO player_votes VALUES
     ('Alice', 'g1', 10),
-    ('Bob', 'g2', 3);
+    ('Bob', 'g1', 1),
+    ('Bob', 'g2', 3),
+    ('David', 'g3', 1),
+    ('Emily', 'g1', 1),
+    ('David', 'g2', 2),
+    ('Emily', 'g2', 2);
 
-  SELECT rank, game, score INTO r FROM ranked_results WHERE rank = 1 LIMIT 1;
-
-  PERFORM pg_temp.assert_equal('g1', r.game);
+  OPEN cursor FOR SELECT * FROM ranked_results WHERE rank = 1 ORDER BY gaming_group;
+  FETCH cursor INTO record;
+  PERFORM pg_temp.assert_equal('Geeks', record.gaming_group);
+  PERFORM pg_temp.assert_equal('g1', record.game);
+  FETCH cursor INTO record;
+  PERFORM pg_temp.assert_equal('Nerds', record.gaming_group);
+  PERFORM pg_temp.assert_equal('g2', record.game);
 END
 $$;
 ROLLBACK;
@@ -59,6 +93,9 @@ DECLARE
   cursor REFCURSOR;
   record RECORD;
 BEGIN
+  INSERT INTO gaming_groups VALUES
+    ('group1');
+
   INSERT INTO players VALUES
     ('Alice'),
     ('Bob'),
@@ -66,6 +103,14 @@ BEGIN
     ('David'),
     ('Erika'),
     ('Frank');
+
+  INSERT INTO group_players VALUES
+    ('group1', 'Alice'),
+    ('group1', 'Bob'),
+    ('group1', 'Carol'),
+    ('group1', 'David'),
+    ('group1', 'Erika'),
+    ('group1', 'Frank');
 
   INSERT INTO games VALUES
     ('g1', 2, 4),
@@ -108,11 +153,20 @@ DO $$
 DECLARE
   r record;
 BEGIN
+  INSERT INTO gaming_groups VALUES
+    ('group1');
+
   INSERT INTO players VALUES
     ('Alice'),
     ('Bob'),
     ('Carol'),
     ('David');
+
+  INSERT INTO group_players VALUES
+    ('group1', 'Alice'),
+    ('group1', 'Bob'),
+    ('group1', 'Carol'),
+    ('group1', 'David');
 
   INSERT INTO games VALUES
     ('awesome', 2, 2),

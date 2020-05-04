@@ -1,0 +1,5 @@
+set -a
+PGHOST=localhost
+PGUSER=games
+PGDATABASE=games
+PGPASSWORD=password

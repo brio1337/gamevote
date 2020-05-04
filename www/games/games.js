@@ -64,21 +64,41 @@ module.exports = function(app, route, connstr, saltRounds) {
         return res.status(500).type('text/plain').send('User ' + user + ' not found');
       }
       var autosave = result.rows[0].autosave;
-      var sql =
-        'SELECT games.game, vote ' +
-        'FROM games LEFT JOIN player_votes ' +
-        'ON games.game = player_votes.game AND player = $1 ' +
-        'ORDER BY vote DESC, game';
+
+      var sql = 'SELECT library FROM gaming_groups JOIN group_players USING (gaming_group) WHERE player = $1';
       client.query({text: sql, values: [user]}, function(err, result) {
-        done();
         if (err) {
           return res.status(500).type('text/plain').send(err.toString());
         }
-        return res.render(modulename, {
-          username: user,
-          autosave: autosave,
-          gamelist: result.rows.filter(row => row.vote !== null),
-          unranked: result.rows.filter(row => row.vote === null),
+        if (result.rows.length != 1) {
+          return res.status(500).type('text/plain').send('Player must be in a single gaming group');
+        }
+        if (result.rows[0].library) {
+          var sql =
+            'SELECT library_games.game, vote ' +
+            'FROM library_games LEFT JOIN player_votes ' +
+            'ON library_games.game = player_votes.game AND player = $1 ' +
+            'WHERE library = $2';
+          var values = [user, result.rows[0].library];
+        } else {
+          var sql =
+            'SELECT games.game, vote ' +
+            'FROM games LEFT JOIN player_votes ' +
+            'ON games.game = player_votes.game AND player = $1 ' +
+            'ORDER BY vote DESC, game';
+          var values = [user];
+        }
+        client.query({text: sql, values: values}, function(err, result) {
+          done();
+          if (err) {
+            return res.status(500).type('text/plain').send(err.toString());
+          }
+          return res.render(modulename, {
+            username: user,
+            autosave: autosave,
+            gamelist: result.rows.filter(row => row.vote !== null),
+            unranked: result.rows.filter(row => row.vote === null),
+          });
         });
       });
     });

@@ -19,13 +19,14 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
   web:
-    build:
-      context: www
-      dockerfile: Dockerfile
-    image: gamevote_node
+    image: node:8
     container_name: gamevote_node
+    volumes:
+      - ./www:/usr/src/app
     ports:
       - 8080:8080
+    working_dir: /usr/src/app
+    command: npm start
   api:
     image: postgrest/postgrest
     ports:
@@ -39,7 +40,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/docker-init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./db:/my-scripts
     ports:
       - 5432:5432

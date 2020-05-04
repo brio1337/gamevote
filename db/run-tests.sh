@@ -1,5 +1,7 @@
 set -e
 
+source env/local
+
 PSQL="psql -v ON_ERROR_STOP=1"
 
 dropdb --if-exists games_test
