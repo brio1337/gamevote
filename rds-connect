@@ -1,0 +1,2 @@
+source db/env/prod
+psql "$@"
