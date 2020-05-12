@@ -78,7 +78,8 @@ module.exports = function(app, route, connstr, saltRounds) {
             'SELECT library_games.game, vote ' +
             'FROM library_games LEFT JOIN player_votes ' +
             'ON library_games.game = player_votes.game AND player = $1 ' +
-            'WHERE library = $2';
+            'WHERE library = $2 ' +
+            'ORDER BY vote DESC, game';
           var values = [user, result.rows[0].library];
         } else {
           var sql =
