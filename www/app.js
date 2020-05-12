@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // config
-var connstr = fs.readFileSync('dbconnstr.txt', 'UTF-8').trim();
+var connstr = process.env.DB_CONN_STR;
 var saltRounds = 10;
 
 // load middleware

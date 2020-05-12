@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     environment:
-      DBCONNSTR: postgresql://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
+      DB_CONN_STR: postgresql://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
   api:
     environment:
       PGRST_DB_URI: postgresql://authenticator:auth@db/${PGDATABASE}
