@@ -1,2 +1,2 @@
-source db/env/prod
+source db/env/rds
 psql "$@"

@@ -1,1 +1,2 @@
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml "$@"
+source db/env/rds
+docker-compose -f docker-compose.yml -f docker-compose.brio.software.yml -f docker-compose.pghost.yml "$@"

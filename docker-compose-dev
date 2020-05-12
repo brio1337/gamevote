@@ -1,1 +1,2 @@
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml "$@"
+source db/env/local
+docker-compose -f docker-compose.yml -f docker-compose.localhost.yml -f docker-compose.localdb.yml "$@"

@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    environment:
+      DBCONNSTR: postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
+  api:
+    environment:
+      PGRST_DB_URI: postgresql://authenticator:auth@${PGHOST}/${PGDATABASE}

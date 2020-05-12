@@ -1,17 +1,11 @@
 version: '3'
 services:
-  nginx:
-    volumes:
-      - ./nginx.dev.conf:/etc/nginx/conf.d/default.conf
   web:
-    image: node:8
-    container_name: gamevote_node
-    volumes:
-      - ./www:/usr/src/app
-    ports:
-      - 8080:8080
-    working_dir: /usr/src/app
-    command: npm start
+    environment:
+      DBCONNSTR: postgresql://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
+  api:
+    environment:
+      PGRST_DB_URI: postgresql://authenticator:auth@db/${PGDATABASE}
   db:
     image: postgres
     volumes:
@@ -24,6 +18,3 @@ services:
       POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASSWORD}
     command: postgres -c work_mem=64MB
-  api:
-    environment:
-      PGRST_DB_URI: postgresql://authenticator:auth@db/${PGDATABASE}

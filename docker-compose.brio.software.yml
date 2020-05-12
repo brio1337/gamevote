@@ -9,8 +9,4 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
   web:
-    working_dir: /usr/src/app
     command: bash -c 'npm install && npm start'
-  api:
-    environment:
-      PGRST_DB_URI: postgresql://authenticator:auth@${PGHOST}/${DATABASE}

@@ -2,3 +2,4 @@ set -a
 PGHOST=gamevote.cvsbgivadrlp.us-west-2.rds.amazonaws.com
 PGUSER=games
 PGDATABASE=games
+PGPASSWORD=gamevote
