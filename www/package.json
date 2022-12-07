@@ -7,7 +7,7 @@
     "aws-serverless-express": "^3.3.5",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "express-session": "^1.14.1",
     "hbs": "^4.0.0",
     "node": "^0.0.0",
